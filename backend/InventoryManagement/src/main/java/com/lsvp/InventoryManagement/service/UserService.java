@@ -38,4 +38,11 @@ public class UserService {
 
         return mapper.toDTO(repository.save(userUpdated));
     }
+
+    public void deleteUser(Long id){
+        if(repository.findById(id) == null){
+            throw new RuntimeException("Usuário não foi encontrado!!");
+        }
+        repository.deleteById(id);
+    }
 }
