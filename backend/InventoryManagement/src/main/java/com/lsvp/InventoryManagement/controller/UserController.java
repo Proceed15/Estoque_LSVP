@@ -37,12 +37,20 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,@Valid @RequestBody UserUpdateDTO dto){
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto){
+        if(!userService.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(userService.updateUser(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        if(!userService.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }

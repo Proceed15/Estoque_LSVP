@@ -40,9 +40,13 @@ public class UserService {
     }
 
     public void deleteUser(Long id){
-        if(repository.findById(id) == null){
-            throw new RuntimeException("Usuário não foi encontrado!!");
-        }
+        repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado!!!"));
+
         repository.deleteById(id);
+    }
+
+    //Para controle de Status 404
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
     }
 }
