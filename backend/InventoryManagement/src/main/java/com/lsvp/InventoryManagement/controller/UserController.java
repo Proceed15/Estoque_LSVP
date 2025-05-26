@@ -1,5 +1,6 @@
 package com.lsvp.InventoryManagement.controller;
 
+import com.lsvp.InventoryManagement.dto.UserUpdateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -9,12 +10,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 //Estava importando o RequestBody errado ); Eu odeio minha vida
-import org.springframework.web.bind.annotation.RequestBody;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.media.Content;
 
 
@@ -26,6 +24,7 @@ import com.lsvp.InventoryManagement.dto.UserDTO;
 // Lucas: Alterei o final da rota de users para user
 // para usá-la como padrão em tudo que seja relativo ao usuário
 @Tag(name = "Usuários", description = "Gerenciamento de usuários")
+
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
@@ -35,5 +34,24 @@ public class UserController {
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreateDTO dto){
         System.out.println(dto);
         return ResponseEntity.ok(userService.createUser(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto){
+        if(!userService.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(userService.updateUser(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        if(!userService.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build();
     }
 }
