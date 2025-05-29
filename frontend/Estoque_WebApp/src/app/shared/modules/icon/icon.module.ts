@@ -17,8 +17,7 @@ import {
   faEye,
   faEyeSlash,
   faTrash,
-  faPenToSquare,
-  faUsers
+  faPenToSquare
 } from '@fortawesome/free-solid-svg-icons';
 
 // Exporta os ícones para uso em outros módulos
@@ -38,8 +37,7 @@ export const icons = {
   faEye,
   faEyeSlash,
   faTrash,
-  faPenToSquare,
-  faUsers
+  faPenToSquare
 };
 
 @NgModule({
