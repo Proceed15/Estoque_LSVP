@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @Column(name = "us_name", length = 50, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "us_password", length = 15, nullable = false)
+    @Column(name = "us_password", length = 100, nullable = false)
     private String password;
 
     //https://stackoverflow.com/questions/67825729/using-enums-in-a-spring-entity
