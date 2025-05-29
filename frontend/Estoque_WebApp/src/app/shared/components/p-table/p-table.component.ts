@@ -7,12 +7,13 @@ import { EventEmitter } from '@angular/core';
   templateUrl: './p-table.component.html',
   styleUrl: './p-table.component.css'
 })
+
 export class PTableComponent<T> {
+  /*Estrutura de Uma Tabela Utilizando Generics T*/
   @Input() data: T[] = []; //Array da tabela de tipo T
   @Input() column: { key: keyof T, label: string, }[] = []; //Definir Colunas  
   @Input() edit:boolean = false; //Habilitar Edição
   @Input() delete:boolean = false; //Habilitar Deleção
   @Output() onEdit = new EventEmitter<T>();
   @Output() onDelete = new EventEmitter<T>();
-
 }
