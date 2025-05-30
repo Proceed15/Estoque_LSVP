@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   userLink: string = '';
   constructor(private http: HttpClient) { 
-    this.userLink = environment.API_URL+"/users"
+    this.userLink = environment.API_URL+"/user"
   }
   
   //Método para registrar um usuário
@@ -46,7 +46,7 @@ export class UserService {
   }
     //Método para deletar um usuário
   public deleteUser(userId: number): void {	
-    this.http.delete<User>(this.userLink+"/delete/"+userId).subscribe(
+    this.http.delete<User>(this.userLink+"/"+userId).subscribe(
       (response) => {
         console.log('Usuário deletado com sucesso:', response);
       },
