@@ -22,11 +22,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(dto));
     }
 
-   /* @PostMapping("/logout")
+   @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") String token) {
         authService.logout(token);
         return ResponseEntity.ok().build();
-    }*/
+    }
 
 
     @PostMapping("/refresh")

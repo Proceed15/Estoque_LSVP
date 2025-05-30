@@ -5,7 +5,6 @@ import com.lsvp.InventoryManagement.dto.TokenDTO;
 import com.lsvp.InventoryManagement.repository.IUserRepository;
 import com.lsvp.InventoryManagement.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -34,6 +33,12 @@ public class AuthService {
         return new TokenDTO(token);
     }
 
+    public void logout(String token) {
+        
+    // Não há como invalidar um token pois não está sendo armazenado no banco. 
+    //então o correto seria recebermos a requisição aqui e no frontend apaga o token do local storage
+
+    }
 
     public TokenDTO refreshToken(String token) {
         String username = jwtTokenUtil.extractUsername(token.replace("Bearer ", ""));
