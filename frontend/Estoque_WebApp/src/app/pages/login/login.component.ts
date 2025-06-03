@@ -27,22 +27,14 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      name: ['', Validators.required],
       password: ['', Validators.required]
     });
-    
-  
   }
 
-
   submitForm(event: Event): void {
-    const formData = this.loginForm.value;
-    this.http.post(environment.API_URL+'/login', formData, {withCredentials: true})
-    .subscribe((res:any)  => {
-      this.auth.setToken(res.token);
-      this.router.navigate(['/']);
-
-    });
+    this.auth.login(this.loginForm);
+    event.preventDefault(); //previne o comportamento padrão do formulário
   }
   
   

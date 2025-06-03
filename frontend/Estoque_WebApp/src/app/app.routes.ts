@@ -12,7 +12,7 @@ export const routes: Routes = [
         children: [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
             {path: 'view', component: ManageViewComponent, pathMatch: 'full'},
-            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full'},
+            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard] },
         ],
      },
     

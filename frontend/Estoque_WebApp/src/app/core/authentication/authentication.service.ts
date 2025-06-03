@@ -4,13 +4,12 @@ import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs'; 
 import { catchError } from 'rxjs/operators';
-
+import { FormGroup } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-   private token: string | null = null;
-   private url = environment.API_URL+"/login"
+   private url: string = environment.API_URL+"/auth/login"
    
 
   constructor(private router: Router, private http: HttpClient) { }
@@ -20,26 +19,34 @@ export class AuthenticationService {
   }
 
   getToken(): string | null {
-    return this.token
+    return localStorage.getItem('acessToken');
   }
 
   //ve se o usuário está autenticado
   isAuthenticated(): boolean {
-    return !!this.token;; //retorno do resultado
+    return !!this.getToken;; //retorno do resultado
   }
   //funcao login
-  login(token: string) : void{
-    this.token = token;
-    this.router.navigate(['/']); // navega para a tela de home
-
+   login(form: FormGroup): void {
+    this.http.post(this.url, form.value, { withCredentials: true })
+      .subscribe((res: any) => {
+        try{
+        const tokenKey = environment.TOKEN_KEY; 
+        var token = res[tokenKey];
+        this.setToken(res.token);
+        this.router.navigate(['/']);
+        }catch (error) {
+          console.error('Erro ao processar o token:', error);
+          throwError(() => new Error('Erro ao processar o token'));
+        }
+      });
   }
   
   //função para logout
   logout(): void{
-    this.token = null;
     localStorage.removeItem('acessToken');  // remove item do storage da navegação
 
-    this.http.post(environment.API_URL+'/logout', {}, {withCredentials: true})
+    this.http.post(environment.API_URL+'/auth/logout', {}, {withCredentials: true})
     .subscribe(() =>{
       this.router.navigate(['/login']); // navega para a tela de login
 

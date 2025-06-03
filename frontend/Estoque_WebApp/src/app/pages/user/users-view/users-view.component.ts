@@ -3,17 +3,19 @@ import { PTableComponent } from '../../../shared/components/p-table/p-table.comp
 import { UserService } from './../../../core/services/user.service';
 import { User } from './../../../shared/models/user';
 import { CommonModule } from '@angular/common';
+import { AuthenticationService } from './../../../core/authentication/authentication.service';
+
 @Component({
   selector: 'app-users-view',
   imports: [PTableComponent, CommonModule],
-   standalone: true,
+ standalone: true,
 templateUrl: './users-view.component.html',
   styleUrl: './users-view.component.css'
 })
 export class UsersViewComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private userService :UserService) {}
+  constructor(private userService :UserService, private auth: AuthenticationService) {}
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe({
@@ -25,6 +27,9 @@ export class UsersViewComponent implements OnInit {
         console.error('Erro ao buscar usuários:', error);
       }
     });
+  }
+  public getToken(): string | null {
+    return this.auth.getToken();
   }
   
   EditUser(userId: number): void {
