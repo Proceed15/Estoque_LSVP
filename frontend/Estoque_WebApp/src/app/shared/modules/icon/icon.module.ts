@@ -22,8 +22,14 @@ import {
   faUsers,
   faPlus,
   faArrowsTurnToDots,
-  faBoxesStacked
+  faBoxesStacked,
+  faCoins,
+  faMinus  
+  
 } from '@fortawesome/free-solid-svg-icons';
+
+import { faClock, faFileArchive } from '@fortawesome/free-regular-svg-icons';
+
 
 // Exporta os ícones para uso em outros módulos
 export const icons = {
@@ -47,7 +53,12 @@ export const icons = {
   faUsers,
   faPlus,
   faArrowsTurnToDots,
-  faBoxesStacked
+  faBoxesStacked, 
+  faCoins,
+  faClock,
+  faFileArchive,
+  faMinus
+
 };
 
 @NgModule({

@@ -1,0 +1,90 @@
+.cards-row {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+
+}
+
+.card{
+    width: 60%;
+    min-width: 300px;
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-top: 0;
+}
+.products{
+    background-color: #3e3862;
+}
+.validity{
+    background-color: #d75e5e;
+}
+.expenses{
+    color: #302b52;
+    background-color: #e5e0ff;
+}
+.card-header fa-icon{
+    font-size: 22pt;
+    margin-right: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+
+}
+.products fa-icon{
+    color: #cccfec;
+}
+.expenses fa-icon{
+    color: #695fa6;
+}
+.validity fa-icon{
+    color: #ffffff;
+}
+.card-header{
+    font-size: 22pt;
+    font-weight: bold;
+    padding: 1px;
+}
+
+.card-body{
+    font-size: 14pt;
+    margin-top: 18px;
+    margin-left: 8px;
+}
+.card:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+
+}
+.products:hover{
+    background-color: #675caa;
+}
+.validity:hover{
+    background-color: #ac3636;
+}
+.expenses:hover{
+    background-color: #877eb6;
+    color: #ffffff;
+}
+
+@media (max-width: 1000px) {
+    .card-header fa-icon {
+        font-size: 15pt;
+      
+    }
+    .cards-row {
+        flex-direction: column;
+    }
+    .card-header{
+        font-size: 15pt;
+    }
+    .card-body{
+        font-size: 13pt;
+    }
+}
+

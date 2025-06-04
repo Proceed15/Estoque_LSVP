@@ -4,10 +4,12 @@ import { ManageLayoutComponent } from './shared/layouts/manage-layout/manage-lay
 import { authGuard } from './core/guards/auth.guard';
 import { UsersViewComponent } from './pages/user/users-view/users-view.component';
 import { ManageViewComponent } from './pages/manage-view/manage-view.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
     /*Adicionar novas rotas aqui*/
     { path: 'login', component: LoginComponent },
+    {path: '', component: DashboardComponent, pathMatch: 'full'},
     { path: 'manage', component: ManageLayoutComponent,
         children: [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
