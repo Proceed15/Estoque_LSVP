@@ -2,6 +2,8 @@ package com.lsvp.InventoryManagement.service;
 
 import com.lsvp.InventoryManagement.dto.User.UserUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.lsvp.InventoryManagement.config.PasswordConfig;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
