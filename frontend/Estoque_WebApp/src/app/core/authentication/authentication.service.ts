@@ -31,8 +31,6 @@ export class AuthenticationService {
     this.http.post(this.url, form.value, { withCredentials: true })
       .subscribe((res: any) => {
         try{
-        const tokenKey = environment.TOKEN_KEY; 
-        var token = res[tokenKey];
         this.setToken(res.token);
         this.router.navigate(['/']);
         }catch (error) {

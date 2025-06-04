@@ -6,45 +6,23 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 
 
-let refresh = false; // Variável fora da função
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  //injeta o serviço de autenticação
   const authService = inject(AuthenticationService);
-  const http = inject(HttpClient);
-  const accessToken = authService.getToken();
+  //obtem o token de autenticação
+  const token = authService.getToken();
 
-  let modifiedReq = req;
-  if (accessToken) {
-    modifiedReq = req.clone({
+  //verifica se o token existe e adiciona ao header da requisição
+  if(token){
+    req = req.clone({
       setHeaders: {
-        authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${token}`
       }
     });
   }
-
-  return next(modifiedReq).pipe(
-    catchError((err: HttpErrorResponse) => {
-      if (err.status === 401 && !refresh) {
-        refresh = true;
-        return http.post<any>(environment.API_URL+'/auth/refresh', {}, { withCredentials: true }).pipe(
-          switchMap((res: any) => {
-            authService.setToken(res.token);
-            const newReq = req.clone({
-              setHeaders: {
-                authorization: `Bearer ${res.token}`
-              }
-            });
-            refresh = false;
-            return next(newReq);
-          }),
-          catchError(refreshErr => {
-            refresh = false;
-            return throwError(() => refreshErr);
-          })
-        );
-      }
-      refresh = false;
-      return throwError(() => err);
-    })
-  );
+  return next(req);
+      
+ 
+  
 }
