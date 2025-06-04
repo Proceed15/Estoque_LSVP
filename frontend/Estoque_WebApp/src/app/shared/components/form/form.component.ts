@@ -1,59 +1,87 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormTemplateComponent } from '../form-template/form-template.component';
+import { Location } from '@angular/common';
+
 @Component({
-  selector: 'app-form',
+  selector: 'app-cadastro-usuario',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NavBarComponent],
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  imports: [CommonModule, ReactiveFormsModule, FormTemplateComponent],
+  template: `
+    <app-form-template
+      formTitle="Cadastro de Usuário"
+      [formGroup]="formulario"
+      submitText="Salvar"
+      cancelText="Cancelar"
+      (formSubmit)="enviarFormulario()"
+      (formCancel)="cancelarFormulario()">
+      
+      <!-- Campos do formulário -->
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" formControlName="nome" #firstField class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" formControlName="email" class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" formControlName="senha" class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmarSenha">Confirmar Senha</label>
+        <input type="password" id="confirmarSenha" formControlName="confirmarSenha" class="form-control">
+      </div>
+      
+    </app-form-template>
+  `,
+  styles: [`form-component.css`]
 })
-export class FormComponent {
-  userForm: FormGroup;
-  hidePassword = true;
-  hideConfirmPassword = true;
+export class CadastroUsuarioComponent {
+  formulario: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.userForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.maxLength(100)]],
-      cargo: ['', [Validators.required, Validators.maxLength(100)]],
-      senha: ['', [
-        Validators.required, 
-        Validators.minLength(6),
-        this.passwordStrengthValidator
-      ]],
+    this.formulario = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmarSenha: ['', Validators.required]
-    }, { validators: this.passwordMatchValidator });
+    }, { 
+      validators: this.validarSenhasIguais 
+    });
   }
 
-  passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value || '';
-    const hasNumber = /\d/.test(value);
-    const hasLetter = /[a-zA-Z]/.test(value);
-    const valid = hasNumber && hasLetter;
-    return valid ? null : { passwordStrength: true };
-  }
-
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const senha = control.get('senha')?.value;
-    const confirmarSenha = control.get('confirmarSenha')?.value;
-    return senha === confirmarSenha ? null : { passwordMismatch: true };
-  }
-
-  onSubmit() {
-    if (this.userForm.valid) {
-      console.log('Formulário enviado:', this.userForm.value);
-      // Implementar lógica de envio aqui
+  validarSenhasIguais(formGroup: FormGroup) {
+    const senha = formGroup.get('senha')?.value;
+    const confirmarSenha = formGroup.get('confirmarSenha')?.value;
+    
+    if (senha !== confirmarSenha) {
+      formGroup.get('confirmarSenha')?.setErrors({ senhasDiferentes: true });
     } else {
-      Object.values(this.userForm.controls).forEach(control => {
+      formGroup.get('confirmarSenha')?.setErrors(null);
+    }
+  }
+
+  enviarFormulario() {
+    if (this.formulario.valid) {
+      console.log('Formulário válido:', this.formulario.value);
+      // Aqui você faria a chamada para a API
+      // this.usuarioService.cadastrar(this.formulario.value).subscribe(...)
+    } else {
+      // Marca todos os campos como tocados para exibir erros
+      Object.values(this.formulario.controls).forEach(control => {
         control.markAsTouched();
       });
     }
   }
 
-  isFieldInvalid(field: string): boolean {
-    const control = this.userForm.get(field);
-    return control ? control.invalid && (control.dirty || control.touched) : false;
+  cancelarFormulario() {
+    console.log('Formulário cancelado');
+    this.formulario.reset();
   }
 }
