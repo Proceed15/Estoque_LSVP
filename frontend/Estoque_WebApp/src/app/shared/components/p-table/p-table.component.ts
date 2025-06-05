@@ -13,6 +13,7 @@ import { ModalModule } from '../../modules/modal/modal.module';
 
 export class PTableComponent<T>  implements OnInit, OnChanges {
   icons = icons
+  @Input() title: string = ''; //Título da Tabela
  /*Estrutura de Uma Tabela Utilizando any*/
   @Input() data: any[] = []; //Array da tabela de tipo any
   columns: string[] = []; //Definir Colunas  

@@ -1,7 +1,8 @@
 
 <table>
-  
-  <thead>
+
+  <caption *ngIf="title != ''">{{title}}</caption>
+  <thead>  
     <tr>
       <th *ngFor="let column of columns">{{ column }}</th>
       <th *ngIf="edit">Editar</th>
@@ -10,7 +11,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of data" [ngClass]="{'view': view}" (click)="view ? onView.emit(row) : null">
-      <td *ngFor="let column of columns">{{ row[column] }}</td>
+      <td *ngFor="let column of columns">
+        <span *ngIf="row[column] && row[column].constructor.name === 'Date'; else other">{{ row[column] | date:'dd/MM/yyyy' }}</span>
+        <ng-template #other>{{ row[column] }}</ng-template>
+      </td>
       <td *ngIf="edit">
         <button class="edit-btn" (click)="onEdit.emit(row)"><fa-icon [icon]="icons.faPenToSquare" class="table-icon"></fa-icon></button>
       

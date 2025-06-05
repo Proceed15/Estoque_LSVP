@@ -1,5 +1,10 @@
 <app-nav-bar></app-nav-bar>
 <div class="container">
-    <app-dashboard-cards></app-dashboard-cards>
+    <div class="main-content">
+        <app-dashboard-cards></app-dashboard-cards>
+        <app-p-table title="Lotes com validades próximas" [data]="expirationBatches" [view]="true"></app-p-table>
+            <app-p-table title="Lotes com validades próximas" [data]="expirationBatches" [view]="true"></app-p-table>
+
+    </div>
     <app-dashboard-actions></app-dashboard-actions>
 </div>

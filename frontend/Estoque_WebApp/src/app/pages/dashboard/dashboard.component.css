@@ -1,3 +1,4 @@
+
 .container {
     width: 90%;
     display: flex;
@@ -9,7 +10,12 @@
     border-radius: 5px;
     padding: 10px;
     align-items: flex-start;
-    
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 app-dashboard-actions {
@@ -17,9 +23,14 @@ app-dashboard-actions {
     width: 20%;
     margin-right: 50px;
 }
+
 app-dashboard-cards {
    margin-top: 10px;
    margin-left: 30px;
    margin-right: 0;
-   
+}
+
+app-p-table {
+    margin-top: 20px;
+    left: 0;
 }
