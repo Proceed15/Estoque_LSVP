@@ -58,3 +58,37 @@ fa-icon {
   color: rgb(172, 22, 22);
 
 }
+@media (max-width: 1000px) {
+  .list-actions {
+    width: 100%;
+    min-width: unset;
+    margin-top: 20px;
+  }
+  .list-container {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .list-actions {
+    width: 100%;
+    min-width: unset;
+    margin-top: 20px;
+    border: none;
+    box-shadow: none;
+  }
+  .list-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 0;
+  }
+  .item-icon {
+    margin: 0 0 8px 0;
+    padding: 0.5rem;
+  }
+  .item-text {
+    text-align: left;
+    padding: 0;
+  }
+}
