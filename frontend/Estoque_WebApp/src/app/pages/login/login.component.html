@@ -1,12 +1,14 @@
 <div class="container">
+    <!-- Linha decorativa -->
     <span class="line"></span>
+    <!-- Título -->
     <h3>LOGIN</h3>
+    <!-- Formulário de login com validação reativa -->
     <form [formGroup]="loginForm" (ngSubmit)="submitForm($event)">
+        <!-- Campo para o nome do usuário -->
         <input type="text" placeholder="Nome" formControlName="name" >
+        <!-- Campo para a senha do usuário -->
         <input type="password"  placeholder="Senha" formControlName="password">
-
-
         <button>ENTRAR</button>
     </form>
-
 </div>

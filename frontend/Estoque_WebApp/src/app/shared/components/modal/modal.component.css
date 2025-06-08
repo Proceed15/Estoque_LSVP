@@ -1,3 +1,4 @@
+/*Estlização do modal*/
 .modal {
   background: #fff;
   border-radius: 8px;
@@ -12,6 +13,7 @@
   align-items: center;
 }
 
+/* Estilização do fundo ao ter modal ativado */
 .overlay {
   background: #000;
   height: 100vh;

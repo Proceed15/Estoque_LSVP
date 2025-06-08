@@ -48,11 +48,14 @@ export class ManageLayoutComponent implements OnInit, OnDestroy {
     // Percorre todos os filhos da rota ativada
     while (currentRoute) {
       if (currentRoute.snapshot.url.length) {
+        // Extrai os segmentos da URL e os adiciona ao array paths
         const segments = currentRoute.snapshot.url.map(segment => segment.path);
         this.paths.push(...segments);
       }
+      // Move para o próximo filho da rota
       currentRoute = currentRoute.firstChild;
     }
+    // Junta os segmentos do caminho com ' > ' para formar o breadcrumb
     this.breadcrumb = this.paths.join(' > ');
   }
 }

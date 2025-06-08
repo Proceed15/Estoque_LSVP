@@ -13,7 +13,7 @@ templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
-  //definição de variáveis
+  //definição do formulário de login
   loginForm!: FormGroup;
   
   
@@ -22,10 +22,12 @@ export class LoginComponent implements OnInit{
     private formBuilder: FormBuilder,
     private router: Router){}
 
-  //definição de modelo do form
  
 
+
   ngOnInit(): void {
+    //inicialização do formulário
+    //criação do formulário com os campos necessários
     this.loginForm = this.formBuilder.group({
       name: ['', Validators.required],
       password: ['', Validators.required]
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit{
   }
 
   submitForm(event: Event): void {
-    this.auth.login(this.loginForm);
+    this.auth.login(this.loginForm); //chamada do serviço de autenticação
     event.preventDefault(); //previne o comportamento padrão do formulário
   }
   

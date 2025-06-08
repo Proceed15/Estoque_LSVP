@@ -1,8 +1,9 @@
+/* Container principal da lista de ações */
 .list-container{
   display: flex;
- 
 }
 
+/* Caixa das ações, com borda e alinhamento */
 .list-actions {
   display: flex;
   flex-direction: column;
@@ -12,6 +13,8 @@
   min-width: 220px; 
   align-items: center;
 }
+
+/* Cada item da lista de ações */
 .list-item {
   width: 100%;
   display: flex;
@@ -19,6 +22,7 @@
   border-bottom: 1px solid #c8c8c8;
 }
 
+/* Ícone do item */
 .item-icon {
   display: flex;
   align-items: center;
@@ -26,38 +30,44 @@
   min-width: 32px;
   margin-right: 1rem;
   padding: 1rem;
-
 }
+
+/* Texto do item */
 .item-text {
   flex: 1;
   text-align: center;
   padding: 0.5rem;
 }
 
+/* Remove borda do último item */
 .list-item:last-child {
   border-bottom: none;
 }
+
+/* Efeito hover nos itens */
 .list-item:hover {
   background-color: #ececec;
   cursor: pointer;
   transform: scale(1.02);
   transition: background-color 0.3s, transform 0.3s;
-
 }
+
+/* Estilização do ícone */
 fa-icon {
   font-size: 18pt;
   margin-right: 0;
   color: #4b5272;
-
 }
+
+/* Cores específicas para ícones de entrada e saida */
 #plus{
   color: rgb(24, 107, 53);
 }
-
 #minus{
   color: rgb(172, 22, 22);
-
 }
+
+/* Responsividade para telas menores que 1000px */
 @media (max-width: 1000px) {
   .list-actions {
     width: 100%;
@@ -70,6 +80,7 @@ fa-icon {
   }
 }
 
+/* Responsividade para telas menores que 700px */
 @media (max-width: 700px) {
   .list-actions {
     width: 100%;

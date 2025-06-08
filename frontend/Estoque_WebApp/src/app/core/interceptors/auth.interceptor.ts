@@ -1,11 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { inject } from '@angular/core';
-import { catchError, switchMap } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
-
-
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   //injeta o serviço de autenticação
@@ -17,11 +12,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if(token){
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`// adiciona o token ao header Authorization
       }
     });
   }
-  return next(req);
+  return next(req);// prossegue com a requisição
       
  
   

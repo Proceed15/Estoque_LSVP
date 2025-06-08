@@ -7,5 +7,5 @@ import { IconModule, icons } from '../../../modules/icon/icon.module';
   styleUrl: './dashboard-actions.component.css'
 })
 export class DashboardActionsComponent {
-  icon = icons;
+  icon = icons; // Importa o módulo de ícones para uso no componente
 }
