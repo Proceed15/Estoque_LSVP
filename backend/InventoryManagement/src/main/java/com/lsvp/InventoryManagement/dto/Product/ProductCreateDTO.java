@@ -1,6 +1,8 @@
 package com.lsvp.InventoryManagement.dto.Product;
 
 import com.lsvp.InventoryManagement.entity.Category;
+import com.lsvp.InventoryManagement.enums.MeasureType;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,15 +19,19 @@ import java.time.LocalDateTime;
 @Schema(description = "DTO para criação do produto")
 public class ProductCreateDTO {
 
+    @Schema(description = "GTIN do Produto", example = "7896006717157")
     @NotBlank(message = "Gtin is required")
     private String gtin;
 
+    @Schema(description = "Medida do Produto", example = "5")
     @NotNull(message = "Measure is required")
     private BigDecimal measure;
 
-    @NotBlank(message = "Measure type is required")
-    private String measureType;
+    @Schema(description = "Tipo de Medida do Produto", example = "kg")
+    @NotNull(message = "Measure type is required")
+    private MeasureType measureType;
 
+    @Schema(description = "Data de criação do Produto", example = "")
     @NotNull
     private LocalDateTime createdAt;
 

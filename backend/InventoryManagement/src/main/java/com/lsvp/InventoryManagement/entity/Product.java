@@ -5,6 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.GeneratedColumn;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.lsvp.InventoryManagement.enums.MeasureType;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -25,8 +27,9 @@ public class Product {
     @Column(name = "pdt_measure", precision = 6, scale = 3, nullable = false)
     private BigDecimal measure;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "pdt_measureType", nullable = false)
-    private String measureType;
+    private MeasureType measureType;
 
     @Column(name = "pdt_createdAt", nullable = false)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")

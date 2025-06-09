@@ -1,6 +1,8 @@
 package com.lsvp.InventoryManagement.dto.Product;
 
 import com.lsvp.InventoryManagement.entity.Category;
+import com.lsvp.InventoryManagement.enums.MeasureType;
+
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ public class ProductDTO {
     private Long id;
     private String gtin;
     private BigDecimal measure;
-    private String measureType;
+    private MeasureType measureType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Category category;

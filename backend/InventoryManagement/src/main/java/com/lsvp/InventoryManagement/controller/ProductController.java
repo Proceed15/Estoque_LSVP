@@ -3,9 +3,13 @@ package com.lsvp.InventoryManagement.controller;
 
 import com.lsvp.InventoryManagement.dto.Product.ProductCreateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
+import com.lsvp.InventoryManagement.dto.User.UserDTO;
 import com.lsvp.InventoryManagement.service.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +29,14 @@ public class ProductController {
         return ResponseEntity.ok(productService.createProduct(dto));
     }
 
-
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getAllProducts(){
+        return ResponseEntity.ok(productService.getAllProducts());
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id){
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
+    
 }
