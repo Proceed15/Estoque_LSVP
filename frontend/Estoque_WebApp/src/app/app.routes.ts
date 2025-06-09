@@ -12,7 +12,7 @@ export const routes: Routes = [
     //[loginGuard] protege as rotas que não devem ser acessadas se o usuário já estiver logado
 
    { path: 'login', component: LoginComponent, canActivate: [loginGuard] }, //rota de login
-   {path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [authGuard] }, //rota padrão redireciona para o dashboard
+   {path: '', redirectTo: 'dashboard', pathMatch: 'full' }, //rota padrão redireciona para o dashboard
    {path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [authGuard] }, //rota do dashboard
    //rotas de gerenciamento 
    { path: 'manage', component: ManageLayoutComponent,
