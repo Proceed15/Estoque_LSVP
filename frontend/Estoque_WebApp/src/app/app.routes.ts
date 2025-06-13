@@ -4,9 +4,11 @@ import { ManageLayoutComponent } from './shared/layouts/manage-layout/manage-lay
 import { authGuard } from './core/guards/auth.guard';
 import { UsersViewComponent } from './pages/user/users-view/users-view.component';
 import { ManageViewComponent } from './pages/manage-view/manage-view.component';
+import { FormComponent } from './shared/components/form/form.component';
 
 export const routes: Routes = [
     /*Adicionar novas rotas aqui*/
+    { path: 'form', component: FormComponent},
     { path: 'login', component: LoginComponent },
     { path: 'manage', component: ManageLayoutComponent,
         children: [

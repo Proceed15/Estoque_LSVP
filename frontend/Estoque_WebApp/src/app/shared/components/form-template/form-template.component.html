@@ -1,9 +1,11 @@
 <div class="form-card">
     <h2 class="form-title">Formulário de {{ formTitle }}</h2>
     
-    <div class="form-content">
-      <ng-content></ng-content> <!-- Conteúdo dinâmico vai aqui -->
-    </div>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <div class="form-content">
+        <ng-content></ng-content> <!-- Conteúdo dinâmico vai aqui -->
+      </div>
+    
     
     <div class="form-actions">
       <button type="button" 
@@ -15,10 +17,10 @@
       
       <button type="submit" 
               class="btn-submit" 
-              (click)="onSubmit()" 
               [disabled]="isSubmitting || formGroup.invalid">
         <span *ngIf="!isSubmitting">{{ submitText }}</span>
         <span *ngIf="isSubmitting">Enviando...</span>
       </button>
     </div>
+    </form>
   </div>

@@ -1,9 +1,7 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-form-template',
@@ -14,7 +12,7 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 })
 export class FormTemplateComponent implements AfterViewInit {
   // Inputs são as formas de como o componente PAI se comunica com o componente FILHO
-  // Inputs com valores padrão
+  // Inputs com valores padrão 
   @Input() formTitle: string = '';
   @Input() formGroup!: FormGroup;
   @Input() isSubmitting: boolean = false;

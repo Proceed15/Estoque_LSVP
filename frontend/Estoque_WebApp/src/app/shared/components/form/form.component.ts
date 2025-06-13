@@ -8,41 +8,10 @@ import { Location } from '@angular/common';
   selector: 'app-cadastro-usuario',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormTemplateComponent],
-  template: `
-    <app-form-template
-      formTitle="Cadastro de Usuário"
-      [formGroup]="formulario"
-      submitText="Salvar"
-      cancelText="Cancelar"
-      (formSubmit)="enviarFormulario()"
-      (formCancel)="cancelarFormulario()">
-      
-      <!-- Campos do formulário -->
-      <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" formControlName="nome" #firstField class="form-control">
-      </div>
-      
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" formControlName="email" class="form-control">
-      </div>
-      
-      <div class="form-group">
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" formControlName="senha" class="form-control">
-      </div>
-      
-      <div class="form-group">
-        <label for="confirmarSenha">Confirmar Senha</label>
-        <input type="password" id="confirmarSenha" formControlName="confirmarSenha" class="form-control">
-      </div>
-      
-    </app-form-template>
-  `,
+  templateUrl: './form.component.html',
   styles: [`form-component.css`]
 })
-export class CadastroUsuarioComponent {
+export class FormComponent {
   formulario: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -50,21 +19,7 @@ export class CadastroUsuarioComponent {
       nome: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]],
-      confirmarSenha: ['', Validators.required]
-    }, { 
-      validators: this.validarSenhasIguais 
     });
-  }
-
-  validarSenhasIguais(formGroup: FormGroup) {
-    const senha = formGroup.get('senha')?.value;
-    const confirmarSenha = formGroup.get('confirmarSenha')?.value;
-    
-    if (senha !== confirmarSenha) {
-      formGroup.get('confirmarSenha')?.setErrors({ senhasDiferentes: true });
-    } else {
-      formGroup.get('confirmarSenha')?.setErrors(null);
-    }
   }
 
   enviarFormulario() {
@@ -80,8 +35,25 @@ export class CadastroUsuarioComponent {
     }
   }
 
-  cancelarFormulario() {
+  // Adicionando o método onSubmit que estava faltando
+  onSubmit() {
+    if (this.formulario.valid) {
+      console.log('Formulário enviado:', this.formulario.value);
+      // Aqui você pode adicionar a lógica para enviar os dados
+    } else {
+      // Marca todos os campos como tocados para exibir erros
+      this.formulario.markAllAsTouched();
+    }
+  }
+
+  // Adicionando o método onCancel que estava faltando
+  onCancel() {
     console.log('Formulário cancelado');
     this.formulario.reset();
   }
+
+  // cancelarFormulario() {
+  //   console.log('Formulário cancelado');
+  //   this.formulario.reset();
+  // }
 }
