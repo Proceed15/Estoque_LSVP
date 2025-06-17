@@ -30,21 +30,21 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(auth -> auth
-
-                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
-                        .requestMatchers("/api/user/**").hasRole("ADMINISTRATOR")
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()
+//            Parte que chama autenticação comentada durante desenvolvimento
+//                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
+//                        .requestMatchers("/api/user/**").hasRole("ADMINISTRATOR")
+//                        .anyRequest().authenticated()
+                );
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
     public AuthenticationManager authManager(AuthenticationConfiguration config) throws Exception {
-    
+
         return config.getAuthenticationManager();
     }
 }

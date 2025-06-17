@@ -31,10 +31,7 @@ public class ProductCreateDTO {
     @NotNull(message = "Measure type is required")
     private MeasureType measureType;
 
-    @Schema(description = "Data de criação do Produto", example = "")
-    @NotNull
-    private LocalDateTime createdAt;
-
+    @Schema(description = "Id da Categoria do Produto", example = "1")
     @NotNull(message = " Product needs a category ")
     private Long categoryId;
 }

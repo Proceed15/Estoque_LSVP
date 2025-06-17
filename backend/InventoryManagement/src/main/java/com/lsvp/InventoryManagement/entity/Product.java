@@ -20,7 +20,7 @@ public class Product {
     @Column(name = "pdt_id")
     private Long id;
 
-    @Column(name = "pdt_gtin", length = 50, nullable = false)
+    @Column(name = "pdt_gtin", length = 50, nullable = false, unique = true)
     private String gtin;
 
     //https://docs.oracle.com/javaee/6/api/javax/persistence/Column.html

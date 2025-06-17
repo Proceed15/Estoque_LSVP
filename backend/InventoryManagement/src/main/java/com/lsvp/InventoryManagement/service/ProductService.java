@@ -75,4 +75,13 @@ public class ProductService {
         return mapper.toDTO(repository.save(productUpdated));
     }
 
+    public void deleteProduct(Long id){
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado!!"));
+
+        repository.deleteById(id);
+
+
+    }
+
+
 }
