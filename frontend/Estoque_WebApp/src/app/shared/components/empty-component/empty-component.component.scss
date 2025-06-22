@@ -3,23 +3,26 @@
   color: #666;
 
   .empty-icon {
-    color:alpha($color: #ff1a1a);
+    /*color:alpha($color: #ff1a1a);*/
+    color: rgba(26, 120, 255, 0.9);
     margin-bottom: 1rem;
   }
 
   .empty-content {
-    text-align: center;
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    text-align: center;;
     gap: 1rem;
     margin-bottom: 1.5rem;
   }
   .empty-message {
-    border-style: round;
-    border-width: 55px;
-    font-size: 1.2rem;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;    
+    font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: rgb(232, 232, 2);
+    color: rgb(111, 111, 3);
   }
 
   .empty-button {

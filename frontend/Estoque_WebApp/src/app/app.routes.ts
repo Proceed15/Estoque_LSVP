@@ -14,12 +14,12 @@ export const routes: Routes = [
     { path: 'manage', component: ManageLayoutComponent,
         children: [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
-            {path: 'view', component: ManageViewComponent, pathMatch: 'full', /*canActivate: [authGuard]*/ },
-            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', /*canActivate: [authGuard]*/ },
+            {path: 'view', component: ManageViewComponent, pathMatch: 'full', canActivate: [authGuard] },
+            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'view/empty', component: EmptyComponentComponent, pathMatch: 'full'},
-            {path: '**', component: EmptyComponentComponent}
+            {path: '**', component: EmptyComponentComponent, pathMatch: 'full', canActivate: [authGuard] },
         ],
      },
+     { path: '**', component: EmptyComponentComponent }
     
-
 ];
