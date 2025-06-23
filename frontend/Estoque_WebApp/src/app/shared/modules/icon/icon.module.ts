@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { 
+  faPassport,
   faHome, 
   faList, 
   faListOl, 
@@ -22,11 +23,18 @@ import {
   faUsers,
   faPlus,
   faArrowsTurnToDots,
-  faBoxesStacked
+  faBoxesStacked,
+  faCoins,
+  faMinus  
+  
 } from '@fortawesome/free-solid-svg-icons';
+
+import { faClock, faFileArchive } from '@fortawesome/free-regular-svg-icons';
+
 
 // Exporta os ícones para uso em outros módulos
 export const icons = {
+  faPassport,
   faHome,
   faList,
   faListOl,
@@ -47,7 +55,12 @@ export const icons = {
   faUsers,
   faPlus,
   faArrowsTurnToDots,
-  faBoxesStacked
+  faBoxesStacked, 
+  faCoins,
+  faClock,
+  faFileArchive,
+  faMinus
+
 };
 
 @NgModule({

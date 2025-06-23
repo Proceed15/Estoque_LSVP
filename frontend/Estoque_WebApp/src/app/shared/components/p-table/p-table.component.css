@@ -1,3 +1,10 @@
+
+/*configurações do container da tabela*/
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+/*configurações da tabela*/
 table {
     width: 88%;
     border-collapse: collapse;
@@ -7,63 +14,78 @@ table {
     text-align:center;
     margin-top: 20px;
 }
- 
+/*configurações do caption da tabela*/
+caption{
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid #d6d6d6;
+    border-bottom: none;
+    border-radius: 2px;
+    padding: 8px;
+    background-color: #f2f2f2;
+}
+/*configurações das células da tabela*/
 th, td {
-    padding: 12px 15px;
+    padding: 8px;
     text-align: center;
     border-bottom: 1px solid #d6d6d6;
 }
- 
+
+/*configurações do cabeçalho da tabela*/
 th {
     background-color: #e6e6e6;
     font-weight: bold;
 }
- 
+
+/*efeito de hover para linhas das tabelas*/
 tr:hover {
     background-color: #d9d9d9;
 }
- 
+
+/*configuração padrão de botões*/
 button {
     border: none;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-radius: 4px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
+/*configuração de ícones dentro da tabela*/
 .table-icon{
     font-size: 14pt;
 }
- 
+
+/*configuração de botão de edição dentro da tabela*/
 .edit-btn {
     background-color: #40c5d6;
     color: white;
 }
- 
+
+/*configuração de botão de exclusão dentro da tabela*/
 .delete-btn {
     background-color: #de6767;
     color: white;
 }
 
-
-.view-btn {
-    background-color: #241e7e;
-    color: white;
-}
- 
+/*efeito hover para o botão de edição */
 .edit-btn:hover {
-    background-color: #2697a6;
+  background-color: #2697a6;
 }
  
+/*efeito hover para o botão de exclusão */
 .delete-btn:hover {
-    background-color: #da4f4d;
-}
-.view:hover{
-    cursor: pointer;
-
+  background-color: #da4f4d;
 }
 
+/*efeito hover para visualização de linha de tabela*/
+.view:hover {
+  cursor: pointer;
+}
+
+/*configuração de botões do modal*/
 .modal-btn{
     padding: 8px;
     font-weight: 12pt;
@@ -72,26 +94,92 @@ button {
     background-color: #d1d1d1;
 
 }
+
+/*efeito hover para botões do modal*/
 .modal-btn:hover{
-    
-    background-color: #a7a7a7;
-
+  background-color: #a7a7a7;
 }
+
+/*configuração de botão de exclusão do modal*/
 .exclude-btn{
-    background-color: #ca2d2d;
-    color: white;
+  background-color: #ca2d2d;
+  color: white;
 }
+
+/*efeito hover para botão de exclusão do modal*/
 .exclude-btn:hover{
-    background-color: #a71f1f;
+  background-color: #a71f1f;
 }
+
+/*configuração de botão OK do modal*/
 .ok-btn{
-    width: 50px;
-    background-color: #2aa42a;
-    color: white;
+  width: 50px;
+  background-color: #2aa42a;
+  color: white;
 }
+
+/*efeito hover para botão OK do modal*/
 .ok-btn:hover{
-    background-color: #1f7a1f;
+  background-color: #1f7a1f;
 }
 
 
+/* Responsividade para telas com largura máxima de 900px */
+@media (max-width: 900px) {
+  table {
+    width: 100%;
+    font-size: 13px;
+  }
+  
+  th, td {
+    padding: 6px;
+  }
+}
 
+/* Responsividade para telas com largura máxima de 700px */
+@media (max-width: 700px) {
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    font-size: 12px;
+  }
+
+
+  thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  /* Esconde o cabeçalho da tabela */
+  thead {
+    display: none;
+  }
+
+  /* Espaçamento entre as linhas da tabela */
+  tr {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e6e6e6;
+  }
+
+  /* Ajusta as células para exibição em bloco e adiciona espaço para o label */
+  td {
+    position: relative;
+    padding-left: 50%;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  /* Exibe o label da célula antes do conteúdo usando o atributo data-label */
+  td:before {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 45%;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #333;
+    content: attr(data-label);
+  }
+}

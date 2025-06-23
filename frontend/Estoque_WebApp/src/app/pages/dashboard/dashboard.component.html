@@ -1,0 +1,18 @@
+<!-- Componente da barra de navegação -->
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+    <div class="main-content">
+        <!-- Cartões do dashboard -->
+        <app-dashboard-cards></app-dashboard-cards>
+        
+        <!-- Tabela de lotes com validades próximas -->
+        <app-p-table title="Lotes com validades próximas" [data]="expirationBatches" [view]="true"></app-p-table>
+        
+        <!-- Tabela das últimas movimentações -->
+        <app-p-table title="Últimas movimentações" [data]="lastMovements" [view]="true"></app-p-table>
+    </div>
+    
+    <!-- Ações do dashboard -->
+    <app-dashboard-actions></app-dashboard-actions>
+</div>

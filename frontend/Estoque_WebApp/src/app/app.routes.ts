@@ -2,23 +2,34 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { ManageLayoutComponent } from './shared/layouts/manage-layout/manage-layout.component';
 import { authGuard } from './core/guards/auth.guard';
+import { loginGuard } from './core/guards/login.guard';
 import { UsersViewComponent } from './pages/user/users-view/users-view.component';
 import { ManageViewComponent } from './pages/manage-view/manage-view.component';
 import { FormComponent } from './shared/components/form/form.component';
 import { Form2Component } from './shared/components/form2/form2.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EmptyComponentComponent } from './shared/components/empty-component/empty-component.component';
 
 export const routes: Routes = [
-    /*Adicionar novas rotas aqui*/
+    //[authGuard] protege as rotas que precisam de autenticação
+    //[loginGuard] protege as rotas que não devem ser acessadas se o usuário já estiver logado
+
     { path: 'form', component: FormComponent},
     { path: 'form2', component: Form2Component},
-    { path: 'login', component: LoginComponent },
-    { path: 'manage', component: ManageLayoutComponent,
+   { path: 'login', component: LoginComponent, canActivate: [loginGuard] }, //rota de login
+   {path: '', redirectTo: 'dashboard', pathMatch: 'full' }, //rota padrão redireciona para o dashboard
+   {path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [authGuard] }, //rota do dashboard
+   //rotas de gerenciamento 
+   { path: 'manage', component: ManageLayoutComponent,
+    //filhos da rota de gerenciamento
         children: [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
-            {path: 'view', component: ManageViewComponent, pathMatch: 'full'},
+            {path: 'view', component: ManageViewComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard] },
+            {path: 'view/empty', component: EmptyComponentComponent, pathMatch: 'full'},
+            {path: '**', component: EmptyComponentComponent, pathMatch: 'full', canActivate: [authGuard] },
         ],
      },
+     { path: '**', component: EmptyComponentComponent }
     
-
 ];

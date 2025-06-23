@@ -1,7 +1,9 @@
+/* Seleciona todos os elementos */
 *{
     font-family: "Poppins", sans-serif;
-
 }
+
+/* Container principal do formulário de login */
 .container{
     display: flex;
     flex-direction: column;
@@ -23,13 +25,15 @@
     border-top-right-radius: 0;
 }
 
+/* Estilização do formulário */
 form{
     margin-left: -10px;
     width: 80%;
     align-items: center;
     justify-content: center;
-    
 }
+
+/* Estilização dos campos de entrada */
 input{
     display: block;
     border: 1px solid rgb(200, 200, 200);
@@ -37,23 +41,22 @@ input{
     padding: 15px;
     width: 100%;
     margin-top: 10px;
-   
 }
+
+/* Efeito hover nos campos de entrada */
 input:hover{
     border: 1px solid rgba(12, 13, 100, 0.582);
-    
-   
-    
-
 }
+
+/* Efeito focus nos campos de entrada */
 input:focus{
     outline: none;
     border: 2px solid rgb(196, 196, 196);
     border-radius: 1px;
-    
-
 }
-button{
+
+/* Estilização do botão */
+.submit-btn{
     display: block;
     color: rgb(255, 255, 255);
     background-color: rgb(51, 129, 207);
@@ -64,19 +67,44 @@ button{
     border-radius: 2px;
     font-size: 12pt;
     font-weight: bold;
-
-
 }
-button:hover{
+
+/* Efeito hover no botão */
+.submit-btn:hover{
     color: rgb(238, 238, 238);
     background-color: rgb(39, 95, 151);
     cursor: pointer;
-
 }
+
+/* Estilização do título */
 h3{
     font-size: 20pt;
     display: block;
     color: rgb(51, 129, 207);
     margin-bottom: 20px;
+}
 
+/*Configuração do modal*/
+app-modal{
+    text-align: center;
+}
+/* Estilização do botão de modal */
+.modal-btn{
+    padding: 5px;
+    display: block;
+    color: white;
+    background-color: rgb(187, 84, 61);
+    font-size: 11pt;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    margin: 20px auto 0 auto;
+    width: 40%; 
+}
+/* Efeito hover no botão de modal */
+.modal-btn:hover{
+    background-color: rgb(132, 54, 36);
+    color: rgb(238, 238, 238);
+    cursor: pointer;
 }

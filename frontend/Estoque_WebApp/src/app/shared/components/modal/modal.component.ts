@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class ModalComponent {
   show: boolean = false;
 
+  // Método para abrir o modal
   toggle () {
     this.show = !this.show;
   }

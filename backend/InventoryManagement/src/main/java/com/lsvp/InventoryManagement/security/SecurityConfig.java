@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -28,23 +29,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        // ✅ Libere completamente os endpoints de autenticação e documentação
-                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        // ✅ Libere o cadastro de usuário sem autenticação
-                        .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
-                        // 🔐 Bloqueia operações de usuário para ADMIN
-                        .requestMatchers("/api/user/**").hasRole("ADMINISTRATOR")
-                        // ⛔ Tudo o resto precisa estar autenticado
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()
+//            Parte que chama autenticação comentada durante desenvolvimento
+//                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
+//                        .requestMatchers("/api/user/**").hasRole("ADMINISTRATOR")
+//                        .anyRequest().authenticated()
+                );
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
     public AuthenticationManager authManager(AuthenticationConfiguration config) throws Exception {
+
         return config.getAuthenticationManager();
     }
 }

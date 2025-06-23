@@ -12,27 +12,33 @@ import { ModalModule } from '../../modules/modal/modal.module';
 })
 
 export class PTableComponent<T>  implements OnInit, OnChanges {
-  icons = icons
+  icons = icons //Importa os ícones do módulo de ícones
+  @Input() title: string = ''; //Título da Tabela
+  
  /*Estrutura de Uma Tabela Utilizando any*/
   @Input() data: any[] = []; //Array da tabela de tipo any
   columns: string[] = []; //Definir Colunas  
   @Input() edit:boolean = false; //Habilitar Edição
   @Input() delete:boolean = false; //Habilitar Deleção
   @Input() view:boolean = false; //Habilitar Visualização
-  @Output() onEdit = new EventEmitter<T>();
-  @Output() onDelete = new EventEmitter<T>();
-  @Output() onView = new EventEmitter<T>();
+  @Output() onEdit = new EventEmitter<T>();//Evento de Edição
+  @Output() onDelete = new EventEmitter<T>();//Evento de Exclusão
+  @Output() onView = new EventEmitter<T>();//Evento de Visualização
+
 
   constructor(private icon: IconModule) { }
 
+  //Inicializa o componente e define as colunas da tabela
   ngOnInit(): void {
     this.updateColumns();
   }
 
+  //Detecta mudanças nas propriedades de entrada
   ngOnChanges(): void {
     this.updateColumns();
   }
 
+  //Método para editar um item
   private updateColumns(): void {
     if (this.data.length > 0) {
       this.columns = Object.keys(this.data[0]);

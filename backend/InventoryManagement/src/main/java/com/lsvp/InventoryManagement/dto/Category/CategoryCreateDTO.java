@@ -21,10 +21,13 @@ public class CategoryCreateDTO {
     @Schema(description = "Descrição da categoria", example = "Arroz")
     private String description;
 
-    // Faz sentido deixar um campo mensagem para o created_at?
+    // Lucas: Faz sentido deixar um campo mensagem para o created_at?
     // Porque ele é criado pelo próprio sistema
-    @NotNull(message = "'Created At' field is required")
-    private LocalDateTime created_at;
+    // Resposta Gustavo: Acredito que não.
+
+    // Lucas: Comentei porque o valor é definido pelo próprio sistema
+//    @NotNull(message = "'Created At' field is required")
+//    private LocalDateTime created_at;
 
     @NotNull(message = "Category type is required")
     @Schema(description = "Tipo da categoria", example = "NAO_PERECIVEL")

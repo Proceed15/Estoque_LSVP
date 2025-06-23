@@ -10,10 +10,11 @@ import { IconModule, icons } from '../../shared/modules/icon/icon.module';
   styleUrl: './manage-view.component.css'
 })
 export class ManageViewComponent {
-  icons = icons;
+  icons = icons; //importando os ícones do módulo IconModule
   
   constructor(private router:Router, private auth:AuthenticationService){}
 
+  // Método para navegar para a página de gerenciamento de usuários
   navigateToUser(): void{
     this.router.navigate(['/manage/view/users']);
 

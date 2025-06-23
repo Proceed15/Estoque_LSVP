@@ -1,0 +1,58 @@
+/* Estiliza o container principal */
+.container {
+  width: 90%; 
+  display: flex; 
+  margin-top: 15px; 
+  flex-direction: row; 
+  margin-left: auto;
+  margin-right: auto; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  padding: 10px; 
+  align-items: flex-start; 
+}
+
+/* Área principal do conteúdo */
+.main-content {
+  display: flex;
+  flex-direction: column; 
+  flex: 1; 
+}
+
+/* Estiliza o componente de ações do dashboard */
+app-dashboard-actions {
+  margin-top: 10px;
+  width: 20%; 
+  margin-right: 50px; 
+}
+
+/* Estiliza o componente de cartões do dashboard */
+app-dashboard-cards {
+   margin-top: 10px; 
+   margin-left: 30px; 
+   margin-right: 0; 
+}
+
+/* Estiliza o componente de tabela */
+app-p-table {
+  margin-top: 20px; 
+  left: 0;
+}
+
+/* Responsividade para telas menores que 1000px */
+@media (max-width: 1000px) {
+  .container {
+  flex-direction: column;
+  align-items: stretch; 
+  padding: 5px; 
+  }
+  app-dashboard-actions {
+  width: 100%; 
+  margin-right: 0; 
+  margin-top: 20px; 
+  }
+  app-dashboard-cards {
+  margin-left: 0; 
+  margin-right: 0; 
+  }
+}
