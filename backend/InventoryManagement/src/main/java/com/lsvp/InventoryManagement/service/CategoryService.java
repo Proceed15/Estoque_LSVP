@@ -2,11 +2,11 @@ package com.lsvp.InventoryManagement.service;
 
 import com.lsvp.InventoryManagement.dto.Category.CategoryCreateDTO;
 import com.lsvp.InventoryManagement.dto.Category.CategoryDTO;
+import com.lsvp.InventoryManagement.dto.Category.CategorySummaryDTO;
 import com.lsvp.InventoryManagement.dto.Category.CategoryUpdateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
 import com.lsvp.InventoryManagement.entity.Category;
 import com.lsvp.InventoryManagement.entity.Product;
-import com.lsvp.InventoryManagement.enums.FoodType;
 import com.lsvp.InventoryManagement.exceptions.ResourceNotFoundException;
 import com.lsvp.InventoryManagement.mapper.ICategoryMapper;
 import com.lsvp.InventoryManagement.mapper.IProductMapper;
@@ -29,26 +29,26 @@ public class CategoryService {
     private ICategoryMapper mapper;
     private IProductMapper product_mapper;
 
-    public CategoryDTO createCategory(CategoryCreateDTO dto)
+    public CategorySummaryDTO createCategory(CategoryCreateDTO dto)
     {
         Category category = mapper.toEntity(dto);
 
         ZoneId zone_id = ZoneId.of("America/Sao_Paulo");
         category.setCreated_at(LocalDateTime.now(zone_id));
 
-        return mapper.toDTO(repository.save(category));
+        return mapper.toSummary(repository.save(category));
     }
 
     public CategoryDTO getCategoryById(Long id)
     {
         Category category = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada!!!"));
 
-         return mapper.toDTO(category);
+        return mapper.toDTO(category);
     }
 
-    public List<CategoryDTO> getAllCategories()
+    public List<CategorySummaryDTO> getAllCategories()
     {
-        return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
+        return repository.findAll().stream().map(mapper::toSummary).collect(Collectors.toList());
     }
 
     public List<ProductDTO> getProductsFromCategory(Long id)

@@ -37,6 +37,5 @@ public class Category {
     private FoodType food_type;
 
     @OneToMany(mappedBy = "category")
-    @JsonIgnore
     private Set<Product> products;
 }

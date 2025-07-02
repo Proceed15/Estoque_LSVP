@@ -2,6 +2,7 @@ package com.lsvp.InventoryManagement.controller;
 
 import com.lsvp.InventoryManagement.dto.Category.CategoryCreateDTO;
 import com.lsvp.InventoryManagement.dto.Category.CategoryDTO;
+import com.lsvp.InventoryManagement.dto.Category.CategorySummaryDTO;
 import com.lsvp.InventoryManagement.dto.Category.CategoryUpdateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
 import com.lsvp.InventoryManagement.service.CategoryService;
@@ -22,7 +23,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory (@Valid @RequestBody CategoryCreateDTO dto)
+    public ResponseEntity<CategorySummaryDTO> createCategory (@Valid @RequestBody CategoryCreateDTO dto)
     {
         System.out.println(dto);
         return ResponseEntity.ok(categoryService.createCategory(dto));
@@ -35,7 +36,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getAllcategories()
+    public ResponseEntity<List<CategorySummaryDTO>> getAllcategories()
     {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
