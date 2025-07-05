@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconModule, icons } from '../../modules/icon/icon.module';
+import {AuthenticationService} from '../../../core/authentication/authentication.service';
 
 @Component({
   // 'selector' só nomeia o componente pra ficar mais fácil de saber quem é o que
@@ -17,6 +18,8 @@ import { IconModule, icons } from '../../modules/icon/icon.module';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
+
+  constructor(private auth: AuthenticationService) {}
   // 'icons' é o objeto que contém todos os ícones importados do módulo
   icons = icons;
 
@@ -32,5 +35,11 @@ export class NavBarComponent {
   // 'isActive' verifica se o menu está ativo
   isActive(menu: string): boolean {
     return this.activeMenu === menu;
+  }
+
+  logout(){
+    // Chama o serviço de autenticação para fazer o logout
+    this.auth.logout();
+    window.location.href = '/login';
   }
 }
