@@ -44,11 +44,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     return this.auth.getToken();
   }
   
-  //Método para editar um usuário
-  EditUser(userId: number): void {
-    console.log('Editar usuário com ID:', userId);
-    // Implementar lógica de edição de usuário
-  }
 
     ngOnDestroy(): void {
     // limpar subscription para evitar memory leak
@@ -77,5 +72,13 @@ export class UsersViewComponent implements OnInit, OnDestroy {
    }catch (error) {
     console.error('Erro ao deletar usuário:', error);
    }
+  }
+
+  // Método para redirecionar para a página de edição de usuário
+  EditUser(id: number): void {
+    // Redireciona para a rota de edição de usuário
+    this.router.navigate(['manage/edit/user', id]);
+
+
   }
 }

@@ -36,7 +36,7 @@ export class UserService {
 
   //Método para atualizar um usuário
   public updateUser(userId: number, user: Partial<User>): void {
-     this.http.put<User>(this.userLink+"/update/"+userId, user).subscribe(
+     this.http.put<User>(this.userLink + "/" + userId, user).subscribe(
       (response) => {
         console.log('Usuário atualizado com sucesso:', response);
       },

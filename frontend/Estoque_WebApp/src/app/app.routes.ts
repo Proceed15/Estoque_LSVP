@@ -8,6 +8,7 @@ import { ManageViewComponent } from './pages/manage-view/manage-view.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { EmptyComponentComponent } from './shared/components/empty-component/empty-component.component';
 import { CreateUserComponent } from './pages/user/create-user/create-user.component';
+import { EditUserComponent } from './pages/user/edit-user/edit-user.component';
 
 export const routes: Routes = [
     //[authGuard] protege as rotas que precisam de autenticação
@@ -24,7 +25,8 @@ export const routes: Routes = [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
             {path: 'view', component: ManageViewComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard] },
-            {path: 'create/user', component: CreateUserComponent, pathMatch: 'full', canActivate: [authGuard]}
+            {path: 'create/user', component: CreateUserComponent, pathMatch: 'full', canActivate: [authGuard]},
+            {path: 'edit/user/:id', component: EditUserComponent, pathMatch: 'full', canActivate: [authGuard]}
         ],
      },
     
