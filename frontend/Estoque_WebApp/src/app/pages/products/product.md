@@ -1,4 +1,4 @@
-CRUD para Produtos de Estoque no Centro Paula Souza
+CRUD para Produtos de Estoque para o Lar São Vincente de Paula
 C Create
 R Read
 U Update
