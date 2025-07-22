@@ -2,6 +2,7 @@ package com.lsvp.InventoryManagement.mapper;
 
 import com.lsvp.InventoryManagement.dto.Product.ProductCreateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
+import com.lsvp.InventoryManagement.dto.Product.ProductSummaryDTO;
 import com.lsvp.InventoryManagement.entity.Product;
 import org.mapstruct.Mapper;
 
@@ -11,4 +12,6 @@ public interface IProductMapper {
     Product toEntity(ProductCreateDTO dto);
 
     ProductDTO toDTO(Product product);
+
+    ProductSummaryDTO toSummary(Product product);
 }

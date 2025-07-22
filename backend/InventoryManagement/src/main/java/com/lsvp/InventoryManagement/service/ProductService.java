@@ -3,6 +3,7 @@ package com.lsvp.InventoryManagement.service;
 
 import com.lsvp.InventoryManagement.dto.Product.ProductCreateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
+import com.lsvp.InventoryManagement.dto.Product.ProductSummaryDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductUpdateDTO;
 import com.lsvp.InventoryManagement.dto.User.UserDTO;
 import com.lsvp.InventoryManagement.dto.User.UserUpdateDTO;
@@ -34,11 +35,11 @@ public class ProductService {
     private ICategoryRepository categoryRepository;
 
 
-    public ProductDTO createProduct(ProductCreateDTO dto){
+    public ProductSummaryDTO createProduct(ProductCreateDTO dto){
 
         Product product = mapper.toEntity(dto);
 
-        product.setCreatedAt(LocalDateTime.now()); 
+        product.setCreatedAt(LocalDateTime.now());
         
         //Procura categoria pelo id passado.
         Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada!!"));
@@ -46,7 +47,7 @@ public class ProductService {
         product.setCategory(category);
 
         
-        return mapper.toDTO(repository.save(product));
+        return mapper.toSummary(repository.save(product));
     }
 
     public ProductDTO getProductById(Long id){
@@ -55,8 +56,8 @@ public class ProductService {
         return mapper.toDTO(product);
     }
 
-    public List<ProductDTO> getAllProducts(){
-        return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
+    public List<ProductSummaryDTO> getAllProducts(){
+        return repository.findAll().stream().map(mapper::toSummary).collect(Collectors.toList());
     }
 
     public ProductDTO updateProduct(Long id, ProductUpdateDTO dto){

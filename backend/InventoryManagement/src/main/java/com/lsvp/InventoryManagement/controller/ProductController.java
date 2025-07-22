@@ -3,6 +3,7 @@ package com.lsvp.InventoryManagement.controller;
 
 import com.lsvp.InventoryManagement.dto.Product.ProductCreateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
+import com.lsvp.InventoryManagement.dto.Product.ProductSummaryDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductUpdateDTO;
 import com.lsvp.InventoryManagement.dto.User.UserDTO;
 import com.lsvp.InventoryManagement.dto.User.UserUpdateDTO;
@@ -26,13 +27,13 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductCreateDTO dto){
+    public ResponseEntity<ProductSummaryDTO> createProduct(@Valid @RequestBody ProductCreateDTO dto){
 
         return ResponseEntity.ok(productService.createProduct(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAllProducts(){
+    public ResponseEntity<List<ProductSummaryDTO>> getAllProducts(){
         return ResponseEntity.ok(productService.getAllProducts());
     }
     

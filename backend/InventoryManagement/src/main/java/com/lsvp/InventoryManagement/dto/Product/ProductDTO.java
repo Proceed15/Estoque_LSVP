@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class ProductDTO {
-
     private Long id;
     private String gtin;
     private BigDecimal measure;
@@ -18,6 +17,4 @@ public class ProductDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Category category;
-
-
 }

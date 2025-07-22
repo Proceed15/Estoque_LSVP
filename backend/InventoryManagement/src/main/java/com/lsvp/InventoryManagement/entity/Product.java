@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Table(name = "tbl_product")
 @Data
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pdt_id")
@@ -43,5 +42,4 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "fk_tbl_category_cat_id")
     private Category category;
-
 }
