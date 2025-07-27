@@ -55,7 +55,7 @@ export class EditUserComponent {
     this.userService.updateUser(idN, user);
     this.form.reset();
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    this.router.navigate(['manage/view/users'])
-});
+      this.router.navigate(['manage/view/users'])
+    });
   }
 }

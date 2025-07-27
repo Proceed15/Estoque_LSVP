@@ -46,7 +46,7 @@ export class CreateUserComponent {
     this.userService.registerUser(user)
     this.form.reset();
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    this.router.navigate(['manage/view/users'])
-});
+      this.router.navigate(['manage/view/users'])
+    });
   }
 }

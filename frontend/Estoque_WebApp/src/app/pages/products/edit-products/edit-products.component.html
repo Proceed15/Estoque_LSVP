@@ -1,9 +1,12 @@
 <!--<p>edit products works!</p>-->
-<app-template-form
+<!--Descobrir porque o Form-Template não aceita esses campos:
     [formTitle]="'Editar Produto'"
-    [formGroup]="form"
-    [submitText]="'Editar'"
+    [submitText]="'Confirmar'"
     [cancelText]="'Cancelar'"
+-->
+<app-template-form
+    [formGroup]="form"
+    
     (formSubmit)="onSubmit()"
 >
     <app-input

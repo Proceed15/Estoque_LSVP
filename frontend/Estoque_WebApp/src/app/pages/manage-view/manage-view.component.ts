@@ -19,5 +19,8 @@ export class ManageViewComponent {
     this.router.navigate(['/manage/view/users']);
 
   }
+  navigateToProducts(): void{
+    this.router.navigate(['/manage/view/products']);
 
+  }
 }
