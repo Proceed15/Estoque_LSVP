@@ -5,19 +5,15 @@ import com.lsvp.InventoryManagement.entity.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
 
 import java.time.LocalDate;
 
-@Data
-public class UnitDTO {
+public class UnitSummaryDTO {
     private Long id;
     private String batch;
     private LocalDate expiration_date;
     private int quantity;
-    // Lucas: Coloquei price como int pela falta de precisão em contas com números decimais
-    // Ao realizar operações, usa-se o int. Ao exibir para o usuário, basta dividir por 100.
     private int price;
-    private Container container;
-    private Product product;
+//    private Container container;
+//    private Product product;
 }

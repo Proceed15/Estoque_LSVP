@@ -9,6 +9,7 @@ import com.lsvp.InventoryManagement.enums.MeasureType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_product")
@@ -42,4 +43,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "fk_tbl_category_cat_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product")
+    private Set<Unit> units;
 }

@@ -3,6 +3,7 @@ package com.lsvp.InventoryManagement.service;
 
 import com.lsvp.InventoryManagement.dto.Container.ContainerCreateDTO;
 import com.lsvp.InventoryManagement.dto.Container.ContainerDTO;
+import com.lsvp.InventoryManagement.dto.Container.ContainerSummaryDTO;
 import com.lsvp.InventoryManagement.dto.Container.ContainerUpdateDTO;
 import com.lsvp.InventoryManagement.entity.Container;
 import com.lsvp.InventoryManagement.exceptions.ResourceNotFoundException;
@@ -23,15 +24,15 @@ public class ContainerService {
     @Autowired
     private IContainerMapper mapper;
 
-    public ContainerDTO createContainer(ContainerCreateDTO dto){
+    public ContainerSummaryDTO createContainer(ContainerCreateDTO dto){
 
         Container container = mapper.toEntity(dto);
-        return mapper.toDTO(repository.save(container));
+        return mapper.toSummary(repository.save(container));
 
     }
 
-    public List<ContainerDTO> getAllContainers(){
-        return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
+    public List<ContainerSummaryDTO> getAllContainers(){
+        return repository.findAll().stream().map(mapper::toSummary).collect(Collectors.toList());
     }
 
     public ContainerDTO getContainerById(Long id){

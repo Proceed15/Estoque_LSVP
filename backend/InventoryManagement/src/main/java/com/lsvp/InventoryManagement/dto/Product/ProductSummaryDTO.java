@@ -1,12 +1,14 @@
 package com.lsvp.InventoryManagement.dto.Product;
 
 import com.lsvp.InventoryManagement.entity.Category;
+import com.lsvp.InventoryManagement.entity.Unit;
 import com.lsvp.InventoryManagement.enums.MeasureType;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 // Lucas: Criei esta classe para poder retornar o produto sem mostrar a categoria
 // Serve mais para quando quiser retornar apenas os produtos ou evitar loops infinitos
@@ -20,4 +22,5 @@ public class ProductSummaryDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 //    private Category category;
+//    private Set<Unit> units;
 }

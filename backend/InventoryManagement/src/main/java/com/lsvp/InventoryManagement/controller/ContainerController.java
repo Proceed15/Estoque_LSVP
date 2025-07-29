@@ -1,9 +1,7 @@
 package com.lsvp.InventoryManagement.controller;
 
 
-import com.lsvp.InventoryManagement.dto.Container.ContainerCreateDTO;
-import com.lsvp.InventoryManagement.dto.Container.ContainerDTO;
-import com.lsvp.InventoryManagement.dto.Container.ContainerUpdateDTO;
+import com.lsvp.InventoryManagement.dto.Container.*;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductUpdateDTO;
 import com.lsvp.InventoryManagement.service.ContainerService;
@@ -26,12 +24,12 @@ public class ContainerController {
 
 
     @PostMapping
-    public ResponseEntity<ContainerDTO> createContainer(@Valid @RequestBody ContainerCreateDTO dto){
+    public ResponseEntity<ContainerSummaryDTO> createContainer(@Valid @RequestBody ContainerCreateDTO dto){
         return ResponseEntity.ok(containerService.createContainer(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<ContainerDTO>> getAllContainers(){
+    public ResponseEntity<List<ContainerSummaryDTO>> getAllContainers(){
         return ResponseEntity.ok(containerService.getAllContainers());
     }
 

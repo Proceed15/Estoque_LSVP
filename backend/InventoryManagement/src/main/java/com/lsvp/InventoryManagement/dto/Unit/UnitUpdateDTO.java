@@ -2,21 +2,18 @@ package com.lsvp.InventoryManagement.dto.Unit;
 
 import com.lsvp.InventoryManagement.entity.Container;
 import com.lsvp.InventoryManagement.entity.Product;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class UnitDTO {
-    private Long id;
+@Schema(description = "DTO para atualização de Unidade")
+public class UnitUpdateDTO {
     private String batch;
     private LocalDate expiration_date;
     private int quantity;
-    // Lucas: Coloquei price como int pela falta de precisão em contas com números decimais
-    // Ao realizar operações, usa-se o int. Ao exibir para o usuário, basta dividir por 100.
     private int price;
     private Container container;
     private Product product;
