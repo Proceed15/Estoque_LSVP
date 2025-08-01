@@ -13,6 +13,7 @@ import { EditProductsComponent } from './pages/products/edit-products/edit-produ
 import { ViewProductsComponent } from './pages/products/view-products/view-products.component';
 import { CreateProductsComponent } from './pages/products/create-products/create-products.component';
 import { CreateContainerComponent } from './pages/container/create-container/create-container.component';
+import { ViewContainersComponent } from './pages/container/view-containers/view-containers.component';
 
 export const routes: Routes = [
     //[authGuard] protege as rotas que precisam de autenticação
@@ -37,6 +38,7 @@ export const routes: Routes = [
             {path: 'edit/products/:id', component: EditProductsComponent, pathMatch: 'full', canActivate: [authGuard] },
 
             {path: 'create/container', component: CreateContainerComponent, pathMatch: 'full', canActivate: [authGuard] },
+            {path: 'view/container', component: ViewContainersComponent, pathMatch: 'full', canActivate: [authGuard] },
 
 
         ],
