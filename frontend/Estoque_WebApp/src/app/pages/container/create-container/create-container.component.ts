@@ -43,7 +43,7 @@ export class CreateContainerComponent {
     this.containerService.registerContainer(container);
     this.form.reset();
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['manage/view/users'])
+      this.router.navigate(['manage/view/container'])
     });
   }
 }
