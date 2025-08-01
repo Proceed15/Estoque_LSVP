@@ -7,8 +7,8 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class ContainerDTO {
+public class ContainerSummaryDTO {
     private Long id;
     private String code;
-    private Set<Unit> units;
+//    private Set<Unit> units;
 }
