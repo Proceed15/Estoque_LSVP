@@ -6,7 +6,6 @@ import { loginGuard } from './core/guards/login.guard';
 import { UsersViewComponent } from './pages/user/users-view/users-view.component';
 import { ManageViewComponent } from './pages/manage-view/manage-view.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { EmptyComponentComponent } from './shared/components/empty-component/empty-component.component';
 import { CreateUserComponent } from './pages/user/create-user/create-user.component';
 import { EditUserComponent } from './pages/user/edit-user/edit-user.component';
 import { EditProductsComponent } from './pages/products/edit-products/edit-products.component';
@@ -14,12 +13,12 @@ import { ViewProductsComponent } from './pages/products/view-products/view-produ
 import { CreateProductsComponent } from './pages/products/create-products/create-products.component';
 import { CreateContainerComponent } from './pages/container/create-container/create-container.component';
 import { ViewContainersComponent } from './pages/container/view-containers/view-containers.component';
+import { TesteComponent } from './teste/teste.component';
 
 export const routes: Routes = [
     //[authGuard] protege as rotas que precisam de autenticação
     //[loginGuard] protege as rotas que não devem ser acessadas se o usuário já estiver logado
-
-    
+   { path: 'teste', component: TesteComponent, canActivate: [authGuard] }, //rota de login
    { path: 'login', component: LoginComponent, canActivate: [loginGuard] }, //rota de login
    {path: '', redirectTo: 'dashboard', pathMatch: 'full' }, //rota padrão redireciona para o dashboard
    {path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [authGuard] }, //rota do dashboard

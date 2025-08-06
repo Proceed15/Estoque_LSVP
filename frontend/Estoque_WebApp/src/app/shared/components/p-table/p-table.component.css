@@ -183,3 +183,12 @@ button {
     content: attr(data-label);
   }
 }
+.search{
+  width: 88%;
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  margin: 0 auto;
+  margin-top: 10px;
+
+}

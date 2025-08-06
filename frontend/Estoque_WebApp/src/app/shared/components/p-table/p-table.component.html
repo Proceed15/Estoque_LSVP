@@ -1,5 +1,14 @@
-<div class="table-container">
-  <table>
+  <div class="table-container" >
+<input
+  *ngIf="showSearch"
+  type="text"
+  class="search"
+  placeholder="Pesquisar..."
+  (input)="onSearch($event)"
+/>
+  <app-empty-component *ngIf="data.length === 0"></app-empty-component>
+
+  <table *ngIf="data.length > 0">
     <!--se existe um título, ele será exibido-->
     <caption *ngIf="title != ''">{{title}}</caption>
     
@@ -56,6 +65,7 @@
     </tbody>
   </table>
 </div>
+
 <!-- Modal de confirmação de exclusão -->
 <app-modal #excluido>
   <h1>Excluído com sucesso!</h1>
