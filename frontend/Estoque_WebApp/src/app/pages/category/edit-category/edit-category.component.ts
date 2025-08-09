@@ -17,15 +17,15 @@ export class EditCategoryComponent {
   id: string = '';
 
   typeOptions = [
-    { label: 'Perecível', value: 'perecivel' },
-    { label: 'Não-Perecível', value: 'nao-perecivel' }
+    { label: 'Perecível', value: 0 },
+    { label: 'Não-Perecível', value: 1 },
   ];
 
   constructor(private fb: FormBuilder, private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
     this.form = this.fb.group({
       description: this.fb.control('', Validators.required),
-      type: this.fb.control('', Validators.required)
+      type: this.fb.control('', Validators.required),
     });
     if (this.id !== '') {
       this.categoryService.getCategoryById(Number(this.id)).subscribe({
@@ -50,10 +50,11 @@ export class EditCategoryComponent {
   onSubmit(): void {
     const idN = Number.parseInt(this.id);
 
-    const category: Partial<Category> = {
+    const category = {
       id: idN,
       description: this.form.value.description,
-      food_type: this.form.value.type
+      updated_at: new Date(),
+      food_type: this.form.value.type,
     };
 
     this.categoryService.updateCategory(idN, category).subscribe({

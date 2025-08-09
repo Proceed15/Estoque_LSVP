@@ -11,8 +11,8 @@ import { NavigationWatcherService } from '../../../core/services/navigation-watc
 @Component({
   selector: 'app-users-view',
   imports: [PTableComponent, CommonModule],
- standalone: true,
-templateUrl: './users-view.component.html',
+  standalone: true,
+  templateUrl: './users-view.component.html',
   styleUrl: './users-view.component.css'
 })
 export class UsersViewComponent implements OnInit, OnDestroy {

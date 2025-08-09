@@ -45,13 +45,13 @@ export const routes: Routes = [
             {path: 'edit/products/:id', component: EditProductsComponent, pathMatch: 'full', canActivate: [authGuard] },
 
             // Containers
+            {path: 'view/containers', component: ViewContainersComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'create/container', component: CreateContainerComponent, pathMatch: 'full', canActivate: [authGuard] },
-            {path: 'view/container', component: ViewContainersComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'edit/container/:id', component: EditContainerComponent, pathMatch: 'full', canActivate: [authGuard] },
 
             // Categorias
+            {path: 'view/categories', component: ViewCategoriesComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'create/category', component: CreateCategoryComponent, pathMatch: 'full', canActivate: [authGuard] },
-            {path: 'view/category', component: ViewCategoriesComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'edit/category/:id', component: EditCategoryComponent, pathMatch: 'full', canActivate: [authGuard] },
         ],
      },

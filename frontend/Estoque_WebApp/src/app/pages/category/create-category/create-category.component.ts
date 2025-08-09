@@ -37,8 +37,8 @@ export class CreateCategoryComponent {
     const category: Category = {
       id: 0,
       description: this.form.value.description,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      created_at: new Date(),
+      updated_at: new Date(),
       food_type: this.form.value.type
       };
       this.categoryService.registerCategory(category).subscribe({
