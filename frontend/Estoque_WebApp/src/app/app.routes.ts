@@ -16,6 +16,7 @@ import { ViewContainersComponent } from './pages/container/view-containers/view-
 import { TesteComponent } from './teste/teste.component';
 import { UnitInputComponent } from './pages/unit/unit-input/unit-input.component';
 import { EditContainerComponent } from './pages/container/edit-container/edit-container.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
     //[authGuard] protege as rotas que precisam de autenticação
@@ -30,7 +31,7 @@ export const routes: Routes = [
         children: [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
             {path: 'view', component: ManageViewComponent, pathMatch: 'full', canActivate: [authGuard] },
-            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard] },
+            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard, adminGuard] },
             {path: 'create/user', component: CreateUserComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'edit/user/:id', component: EditUserComponent, pathMatch: 'full', canActivate: [authGuard] },
 

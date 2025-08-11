@@ -45,5 +45,20 @@ export class AuthenticationService {
     })
   }
 
+  //função para pegar o username do usuário
+  userIsAdmin(): boolean {
+    const token = this.getToken();
+    if (!token) {
+      return false; // Retorna false se o token não existir
+    }
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decodifica o token JWT
+      return payload.admin === true; // Retorna true se admin for true, senão false
+    } catch {
+      return false;
+    }
+  }
+  
+
 }
 

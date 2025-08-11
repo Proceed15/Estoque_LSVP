@@ -23,4 +23,7 @@ export class ManageViewComponent {
     this.router.navigate(['/manage/view/products']);
 
   }
+  navigateToContainers(): void{
+    this.router.navigate(['/manage/view/container']);
+  }
 }
