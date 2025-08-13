@@ -53,7 +53,7 @@ export class AuthenticationService {
     }
     try {
       const payload = this.decodeToken(); // Decodifica o token JWT
-      return payload.admin === true; // Retorna true se admin for true, senão false
+      return payload.role === "ADMINISTRATOR"; // Retorna true se admin for true, senão false
     } catch {
       return false;
     }

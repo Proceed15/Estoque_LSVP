@@ -11,8 +11,9 @@ import { IconModule, icons } from '../../shared/modules/icon/icon.module';
 })
 export class ManageViewComponent {
   icons = icons; //importando os ícones do módulo IconModule
-  
-  constructor(private router:Router, private auth:AuthenticationService){}
+
+  constructor(private router:Router, private auth:AuthenticationService){
+  }
 
   // Método para navegar para a página de gerenciamento de usuários
   navigateToUser(): void{
@@ -26,4 +27,6 @@ export class ManageViewComponent {
   navigateToContainers(): void{
     this.router.navigate(['/manage/view/container']);
   }
+
+
 }
