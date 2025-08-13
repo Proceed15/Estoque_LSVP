@@ -52,10 +52,23 @@ export class AuthenticationService {
       return false; // Retorna false se o token não existir
     }
     try {
-      const payload = JSON.parse(atob(token.split('.')[1])); // Decodifica o token JWT
+      const payload = this.decodeToken(); // Decodifica o token JWT
       return payload.admin === true; // Retorna true se admin for true, senão false
     } catch {
       return false;
+    }
+  }
+  //decodifica o token JWT para obter o payload
+  decodeToken(): any {
+    const token = this.getToken();
+    if (!token) {
+      return null; // Retorna null se o token não existir
+    }
+    try {
+      return JSON.parse(atob(token.split('.')[1])); // Decodifica o token JWT
+    } catch (error) {
+      console.error('Erro ao decodificar o token:', error);
+      return null;
     }
   }
   

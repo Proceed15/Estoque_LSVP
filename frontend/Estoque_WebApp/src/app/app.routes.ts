@@ -31,7 +31,7 @@ export const routes: Routes = [
         children: [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
             {path: 'view', component: ManageViewComponent, pathMatch: 'full', canActivate: [authGuard] },
-            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard, adminGuard] },
+            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'create/user', component: CreateUserComponent, pathMatch: 'full', canActivate: [authGuard] },
             {path: 'edit/user/:id', component: EditUserComponent, pathMatch: 'full', canActivate: [authGuard] },
 
