@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconModule, icons } from '../../modules/icon/icon.module';
-import {AuthenticationService} from '../../../core/authentication/authentication.service';
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { filter } from 'rxjs';
 
 @Component({
   // 'selector' só nomeia o componente pra ficar mais fácil de saber quem é o que
   selector: 'app-nav-bar',
   // 'standalone' fala que o componente é independente e não precisa de um módulo
   standalone: true,
-  // 'imports' só importa as coisas que o componente precisa
+  // 'imports' importa as coisas que o componente precisa
   imports: [CommonModule, RouterModule, FontAwesomeModule, IconModule],
   // Link do template
   templateUrl: './nav-bar.component.html',
@@ -19,17 +20,42 @@ import {AuthenticationService} from '../../../core/authentication/authentication
 })
 export class NavBarComponent {
 
-  constructor(private auth: AuthenticationService) {}
+  constructor(private auth: AuthenticationService, private router: Router) {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.setActiveByRoute(event.urlAfterRedirects);
+      });
+  }
   // 'icons' é o objeto que contém todos os ícones importados do módulo
   icons = icons;
 
+  // 'hasRole' verifica se o usuário tem um papel específico
+  hasRole(role: string): boolean {
+    return this.auth.getToken() === role;
+  }
+
+  // 'showDropdown' controla a visibilidade do dropdown de produtos
+  showDropdown = false;
+
   // Aquela barrinha branca inferior que mostra o que tá ativa
-  activeMenu: string = 'produtos';
-  // TODO: tem que ajustar isso pra ela não ficar "roubando" os outros.
-  
-  // 'setActive' define qual menu está ativo
-  setActive(menu: string) {
-    this.activeMenu = menu;
+  activeMenu: string = '';
+
+  // Quando a página muda, ela redefinia o valor sempre para '', 
+  // então, troquei pra força bruta com essa função. XD
+  // Só acrescentar mais rotas ou opções aqui
+  setActiveByRoute(url: string) {
+    if (url.includes('dashboard')) {
+      this.activeMenu = 'home';
+    } else if (url.includes('manage/view/products')) {
+      this.activeMenu = 'produtos';
+    } else if (url.includes('manage/view/category')) {
+      this.activeMenu = 'categorias';
+    } else if (url.includes('manage')) {
+      this.activeMenu = 'gestao';
+    } else if (url.includes('relatorios')) {
+      this.activeMenu = 'relatorios';
+    }
   }
 
   // 'isActive' verifica se o menu está ativo
