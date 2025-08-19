@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconModule, icons } from '../../modules/icon/icon.module';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { filter } from 'rxjs';
+import { DropdownComponent } from '../dropdown/dropdown.component';
 
 @Component({
   // 'selector' só nomeia o componente pra ficar mais fácil de saber quem é o que
@@ -12,7 +13,7 @@ import { filter } from 'rxjs';
   // 'standalone' fala que o componente é independente e não precisa de um módulo
   standalone: true,
   // 'imports' importa as coisas que o componente precisa
-  imports: [CommonModule, RouterModule, FontAwesomeModule, IconModule],
+  imports: [CommonModule, RouterModule, FontAwesomeModule, IconModule, DropdownComponent],
   // Link do template
   templateUrl: './nav-bar.component.html',
   // Link do css
@@ -20,12 +21,15 @@ import { filter } from 'rxjs';
 })
 export class NavBarComponent {
 
+  userName: string = '';
+  
   constructor(private auth: AuthenticationService, private router: Router) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.setActiveByRoute(event.urlAfterRedirects);
       });
+    this.userName = this.auth.getUserName();
   }
   // 'icons' é o objeto que contém todos os ícones importados do módulo
   icons = icons;
