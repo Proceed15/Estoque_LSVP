@@ -71,7 +71,11 @@ export class AuthenticationService {
       return null;
     }
   }
-  
-
+  getUserName(): string {
+    const token = this.getToken();
+      if (!token) return '';
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.name || '';
+    // não sei se existe uma maneira melhor de fazer isso.
+  }
 }
-

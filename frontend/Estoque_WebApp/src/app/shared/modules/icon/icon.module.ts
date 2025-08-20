@@ -28,8 +28,9 @@ import {
   faMinus,
   faRightFromBracket,
   faBarcode,
+  faUtensils,
   faB,
-  faTriangleCircleSquare
+  faTriangleCircleSquare,
 
   
 } from '@fortawesome/free-solid-svg-icons';
@@ -67,6 +68,8 @@ export const icons = {
   faMinus,
   faRightFromBracket,
   faBarcode,
+  faUtensils,
+  faB,
 
 };
 
