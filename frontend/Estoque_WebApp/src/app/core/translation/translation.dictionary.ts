@@ -1,6 +1,6 @@
 export const TRANSLATION = {
     manage: 'Gerenciar',
-    view: 'Ver',
+    view: 'Visualizar',
     create: 'Criar',
     edit: 'Editar',
     user: 'Usuário',
