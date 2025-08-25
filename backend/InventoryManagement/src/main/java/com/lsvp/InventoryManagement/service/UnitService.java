@@ -42,6 +42,7 @@ public class UnitService {
 
         Product product = productRepository.findById(dto.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrada!!"));
 
+
         unit.setContainer(container);
 
         unit.setProduct(product);
