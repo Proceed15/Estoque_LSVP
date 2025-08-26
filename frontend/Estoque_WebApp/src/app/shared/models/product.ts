@@ -4,5 +4,7 @@ export interface Product {
     measureType: string;
     description: string;
     categoryId: number;
+    createdAt: Date;
+    updatedAt: Date;
   
 }
