@@ -21,7 +21,7 @@ public class Container {
     @Column(name = "con_code", length = 20, unique = true)
     private String code;
 
-    @OneToMany(mappedBy = "container")
+    @OneToMany(mappedBy = "container", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Unit> units;
