@@ -13,6 +13,7 @@ import { ViewProductsComponent } from './pages/products/view-products/view-produ
 import { CreateProductsComponent } from './pages/products/create-products/create-products.component';
 import { CreateContainerComponent } from './pages/container/create-container/create-container.component';
 import { ViewContainersComponent } from './pages/container/view-containers/view-containers.component';
+import { The404PageComponent } from './shared/components/the404-page/the404-page.component';
 import { TesteComponent } from './teste/teste.component';
 import { UnitInputComponent } from './pages/unit/unit-input/unit-input.component';
 import { EditContainerComponent } from './pages/container/edit-container/edit-container.component';
@@ -46,6 +47,6 @@ export const routes: Routes = [
 
         ],
      },
-    
+    { path:'**', component: The404PageComponent, redirectTo: '404' }, //rota ** redireciona para o 404 component
 ];
 
