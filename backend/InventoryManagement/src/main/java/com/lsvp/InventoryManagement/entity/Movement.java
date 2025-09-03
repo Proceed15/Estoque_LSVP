@@ -4,9 +4,13 @@ import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.lsvp.InventoryManagement.enums.MovementType;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,8 +35,9 @@ public class Movement {
     @Column(name = "mov_quantity", nullable = false)
     private int quantity;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "mov_type", length = 30, nullable = false)
-    private String type;
+    private MovementType type;
 
     @Column(name = "mov_origin", length = 30, nullable = false)
     private String origin;
