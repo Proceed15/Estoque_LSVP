@@ -47,6 +47,6 @@ export const routes: Routes = [
 
         ],
      },
-    { path:'**', component: The404PageComponent, redirectTo: '404' }, //rota ** redireciona para o 404 component
+    { path:'**', component: The404PageComponent }, //rota ** redireciona para o 404 component
 ];
 
