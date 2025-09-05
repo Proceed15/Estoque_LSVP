@@ -13,11 +13,8 @@ import { ViewProductsComponent } from './pages/products/view-products/view-produ
 import { CreateProductsComponent } from './pages/products/create-products/create-products.component';
 import { CreateContainerComponent } from './pages/container/create-container/create-container.component';
 import { ViewContainersComponent } from './pages/container/view-containers/view-containers.component';
-<<<<<<< HEAD
 import { The404PageComponent } from './shared/components/the404-page/the404-page.component';
 import { TesteComponent } from './teste/teste.component';
-=======
->>>>>>> ab833c7f29faa5f0af656ae11ac018a7b0431d70
 import { UnitInputComponent } from './pages/unit/unit-input/unit-input.component';
 import { EditContainerComponent } from './pages/container/edit-container/edit-container.component';
 import { CreateCategoryComponent } from './pages/category/create-category/create-category.component';
@@ -28,19 +25,19 @@ import { adminGuard } from './core/guards/admin.guard';
 export const routes: Routes = [
     //[authGuard] protege as rotas que precisam de autenticação
     //[loginGuard] protege as rotas que não devem ser acessadas se o usuário já estiver logado
-   { path: 'teste', component: UnitInputComponent, canActivate: [authGuard] }, //rota de login
-   { path: 'login', component: LoginComponent, canActivate: [loginGuard] }, //rota de login
+   { path: 'teste', component: UnitInputComponent, /*canActivate: [authGuard]*/ }, //rota de login
+   { path: 'login', component: LoginComponent, /*canActivate: [loginGuard]*/ }, //rota de login
    {path: '', redirectTo: 'dashboard', pathMatch: 'full' }, //rota padrão redireciona para o dashboard
-   {path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [authGuard] }, //rota do dashboard
+   {path: 'dashboard', component: DashboardComponent, pathMatch: 'full', /*canActivate: [authGuard]*/ }, //rota do dashboard
    //rotas de gerenciamento 
    { path: 'manage', component: ManageLayoutComponent,
     //filhos da rota de gerenciamento
         children: [
             {path: '', redirectTo: 'view', pathMatch: 'full'},
             {path: 'view', component: ManageViewComponent, pathMatch: 'full'},
-            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', canActivate: [adminGuard] },
-            {path: 'create/user', component: CreateUserComponent, pathMatch: 'full', canActivate: [adminGuard] },
-            {path: 'edit/user/:id', component: EditUserComponent, pathMatch: 'full', canActivate: [adminGuard] },
+            {path: 'view/users', component: UsersViewComponent, pathMatch: 'full', /*canActivate: [adminGuard]*/ },
+            {path: 'create/user', component: CreateUserComponent, pathMatch: 'full', /*canActivate: [adminGuard]*/ },
+            {path: 'edit/user/:id', component: EditUserComponent, pathMatch: 'full', /*canActivate: [adminGuard]*/ },
 
             {path: 'view/products', component: ViewProductsComponent, pathMatch: 'full'},
             {path: 'create/products', component: CreateProductsComponent, pathMatch: 'full'},
@@ -54,8 +51,8 @@ export const routes: Routes = [
             {path: 'view/categories', component: ViewCategoriesComponent, pathMatch: 'full'},
             {path: 'edit/category/:id', component: EditCategoryComponent, pathMatch: 'full'},
 
-        ], canActivate: [authGuard]
+        ], /*canActivate: [authGuard]*/
      },
-    { path:'**', component: The404PageComponent }, //rota ** redireciona para o 404 component
+    { path:'**', component: The404PageComponent, pathMatch: 'full' }, //rota ** redireciona para o 404 component
 ];
 

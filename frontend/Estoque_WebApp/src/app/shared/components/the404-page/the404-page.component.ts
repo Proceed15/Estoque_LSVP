@@ -13,15 +13,7 @@ import { IconModule, icons } from '../../modules/icon/icon.module';
 })
 export class The404PageComponent {
     @Input() message: string = 'Sem Conteúdo para Exibir';
-    //@Input() icon: string = 'pi pi-exclamation-triangle'; 
-    //@Input() icon?: IconDefinition;
-    icon: IconDefinition = icons.faPassport; // Ícone padrão
-    @Input() showButton: boolean = false;
-    //@Input() Elbutton: string = 'Voltar';
-    Elbutton: string = 'Retorne a Tela Inicial';
-
-    @Input() onButtonClick: () => void = () => {};
-    //Clique do Botão
   }
+
 
 

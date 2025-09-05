@@ -1,40 +1,41 @@
-.The404-stationary {
-  padding: 2rem;
-  color: #666;
-
-  .The404-icon {
-    /*color:alpha($color: #ff1a1a);*/
-    color: rgba(26, 120, 255, 0.9);
-    margin-bottom: 1rem;
-  }
-
-  .The404-content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-align: center;;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  .The404-message {
+.notfound{
     text-align: center;
-    font-family: 'Times New Roman', Times, serif;    
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    color: rgb(111, 111, 3);
-  }
+    text-justify: center;
+    h1{
+        font-size: 10rem;
+        color: #61b0ff;
+    }
 
-  .The404-button {
-    background-color: #007bff;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+    h2{
+        display: inline-block;    
+        background-color: aliceblue;  
+        font-size: 2rem;
+        margin-bottom: 20px;
+        border-radius: 9px;
+     }  
+     h4{
+        display: inline-block;    
+        background-color: aliceblue;  
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        border-radius: 9px;
+    }
+    p{
+        font-size: 1.2rem;
+        color: #666;
+    }
+    a{
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #61c2ff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
 
-  .The404-button:hover {
-    background-color: #0056b3;
-  }
+        &:hover{
+            background-color: #50e680;
+        }
+    }
 }

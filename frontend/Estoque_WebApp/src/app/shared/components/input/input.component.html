@@ -1,14 +1,14 @@
 <div class="form-group" [class.has-error]="control?.invalid && (control?.touched || control?.dirty)">
   <label *ngIf="label">{{ label }}</label>
 
-  <!-- Input normal -->
+  <!-- Input normal Add Later: [mask]="maskUse"-->
   <input 
     *ngIf="type !== 'select' && type !== 'date'"
     [type]="type"
     [formControl]="control"
     [placeholder]="placeholder || ''"
     [disabled]="disable"
-    [mask]="maskUse"
+    
   >
 
   <!-- Input date -->
