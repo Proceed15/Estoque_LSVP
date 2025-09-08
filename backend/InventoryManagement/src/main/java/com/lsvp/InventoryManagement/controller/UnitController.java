@@ -20,11 +20,11 @@ public class UnitController {
     @Autowired
     private UnitService unitService;
 
-    @PostMapping
-    public ResponseEntity<UnitDTO> createProduct(@Valid @RequestBody UnitCreateDTO dto){
+    // @PostMapping
+    // public ResponseEntity<UnitDTO> createProduct(@Valid @RequestBody UnitCreateDTO dto){
 
-        return ResponseEntity.ok(unitService.createUnit(dto));
-    }
+    //     return ResponseEntity.ok(unitService.createUnit(dto));
+    // }
 
     @GetMapping
     public ResponseEntity<List<UnitDTO>> getAllUnits(){
@@ -36,11 +36,11 @@ public class UnitController {
         return ResponseEntity.ok(unitService.getUnitById(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UnitDTO> updateUnit(@PathVariable Long id, @Valid @RequestBody UnitUpdateDTO dto){
+    // @PutMapping("/{id}")
+    // public ResponseEntity<UnitDTO> updateUnit(@PathVariable Long id, @Valid @RequestBody UnitUpdateDTO dto){
 
-        return ResponseEntity.ok(unitService.updateUnit(id, dto));
-    }
+    //     return ResponseEntity.ok(unitService.updateUnit(id, dto));
+    // }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUnit(@PathVariable Long id){
