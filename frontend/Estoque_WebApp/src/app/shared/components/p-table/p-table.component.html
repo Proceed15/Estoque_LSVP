@@ -35,7 +35,7 @@
       <!--ngClass - define classe dinâmica dependendo do valor de view ser true-->
       <!--(click) - evento de click com ternário, se view for true ele realiza a função onView emitindo 
       o row como parâmetro senão tem valor nullo-->
-      <tr *ngFor="let row of data" [ngClass]="{'view': view}" (click)="view ? onView.emit(row) : null">
+      <tr *ngFor="let row of data"  [ngClass]="{'view': view}" (click)="view ? onView.emit(row) : null; toggleSelected(row)" [class.selected]="rowSelected === row">
         <!--ngFor - para cada coluna dentro de columns gerar uma célula na tabela-->
         <!--[attr.data-label] - define o atributo data-label para acessibilidade e responsividade,
         usado data-label com CSS para exibir o nome da coluna antes do valor.-->

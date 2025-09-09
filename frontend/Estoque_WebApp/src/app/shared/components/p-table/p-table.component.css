@@ -149,6 +149,9 @@ button:focus {
 .ok-btn:hover {
   background-color: var(--success-hover-color);
 }
+.selected {
+  background-color: #ebebeb !important; /* Cor de fundo diferente para a linha selecionada */
+}
 
 /* Responsividade */
 @media (max-width: 992px) {
