@@ -47,7 +47,11 @@ export class ViewCategoriesComponent implements OnInit, OnDestroy {
   private loadCategories(): void {
     this.categoryService.getAllCategories().subscribe({
       next: (categories) => {
-        this.categories = categories;
+        this.categories = categories.map((cat: Category) => ({
+          ...cat,
+          created_at: new Date(cat.created_at),
+          updated_at: cat.updated_at ? new Date(cat.updated_at) : undefined
+        }));
       },
       error: (error) => {
         console.error('Erro carregando categorias:', error);
