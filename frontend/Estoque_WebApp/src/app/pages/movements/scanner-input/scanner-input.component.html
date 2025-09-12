@@ -1,0 +1,32 @@
+<a>
+    <fa-icon [icon]="icons.faBarcode"></fa-icon>
+    <span id="space"></span>
+    <input #input type="hidden" placeholder="Escaneie o código de barras do produto" [(ngModel)]="barcode">
+    Escanear Entrada
+</a>
+<div *ngIf="batchView">
+    <app-form-template
+    [formTitle]="'Registrar Lote'"
+    [formGroup]="form"
+    [submitText]="'Salvar'"
+    [cancelText]="'Cancelar'"
+    (formSubmit)="onSubmit()"
+>
+    <!-- Campo para o Lote -->
+    <app-input
+        [control]="getControl('batch')"
+        type="text"
+        label="Lote"
+        placeholder="Digite o lote do produto"
+    ></app-input>
+
+    <!-- Campo para a Quantidade -->
+    <app-input
+        [control]="getControl('quantity')"
+        type="number"
+        label="Quantidade"
+        placeholder="Digite a quantidade"
+    ></app-input>
+</app-form-template>
+
+</div>
