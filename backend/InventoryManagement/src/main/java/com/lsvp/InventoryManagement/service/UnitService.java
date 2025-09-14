@@ -59,12 +59,21 @@ public class UnitService {
         }
     }
 
+    @Transactional
     public UnitDTO getUnitById(Long id){
         Unit unit = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unidade não encontrada!!!"));
 
         return mapper.toDTO(unit);
     }
 
+    @Transactional
+    public UnitDTO getUnitByBatch(String batch){
+        Unit unit = repository.findByBatch(batch).orElseThrow(() -> new ResourceNotFoundException("Unidade não encontrada!!!"));
+
+        return mapper.toDTO(unit);
+    }
+
+    @Transactional
     public List<UnitDTO> getAllUnits(){
         return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
     }

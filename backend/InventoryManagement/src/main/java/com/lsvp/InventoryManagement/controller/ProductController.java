@@ -3,7 +3,6 @@ package com.lsvp.InventoryManagement.controller;
 
 import com.lsvp.InventoryManagement.dto.Product.ProductCreateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
-import com.lsvp.InventoryManagement.dto.Product.ProductSummaryDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductUpdateDTO;
 import com.lsvp.InventoryManagement.dto.User.UserDTO;
 import com.lsvp.InventoryManagement.dto.User.UserUpdateDTO;
@@ -40,6 +39,11 @@ public class ProductController {
         @GetMapping("/{id}")
         public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id){
             return ResponseEntity.ok(productService.getProductById(id));
+        }
+
+        @GetMapping("/gtin/{gtin}")
+        public ResponseEntity<ProductDTO> getProductByGtin(@PathVariable String gtin){
+            return ResponseEntity.ok(productService.getProductByGtin(gtin));
         }
 
         @PutMapping("/{id}")
