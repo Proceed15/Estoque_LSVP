@@ -36,5 +36,13 @@ export const TRANSLATION = {
     productId: 'ID do Produto',
     quantity: 'Quantidade',
     actions: 'Ações',
+    movements: 'Movimentações',
+    movement: 'Movimentação',
+    input: 'Entrada',
+    output: 'Saída',
+    scan: 'Escanear',
+    inputMovement: 'Movimentação de Entrada',
+    outputMovement: 'Movimentação de Saída',
+    sourceType: 'Tipo de Fonte',
   
 }

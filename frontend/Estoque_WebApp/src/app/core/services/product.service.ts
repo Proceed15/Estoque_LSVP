@@ -29,6 +29,11 @@ export class ProductService {
     return this.http.get<Product>(this.productLink+"/"+productId);
   }
 
+  //Método para pegar um produto pelo gtin
+  public getProductByGtin(gtin: string): Observable<Product> {
+    return this.http.get<Product>(this.productLink+"/gtin/"+gtin);
+  }
+
   //Método para atualizar um usuário
   public updateProduct(productId: number, product: Partial<Product>): Observable<Partial<Product>> { 
      return this.http.put<Product>(this.productLink + "/" + productId, product);
