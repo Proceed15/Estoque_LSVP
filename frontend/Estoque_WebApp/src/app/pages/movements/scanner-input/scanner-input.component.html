@@ -27,6 +27,20 @@
         label="Quantidade"
         placeholder="Digite a quantidade"
     ></app-input>
+    price: this.fb.control('', Validators.required),
+      sourceType: this.fb.control('', Validators.required),
+    <!-- Campo para o Preço -->
+    <app-input
+        [control]="getControl('price')"
+        type="number"
+        label="Preço"
+        placeholder="Digite o preço"
+    ></app-input>
+    <app-select
+        [control]="getControl('sourceType')"
+        label="Tipo de Origem"
+        [options]="sourceOptions"
+        placeholder="Selecione o tipo de origem"
 </app-form-template>
 
 </div>

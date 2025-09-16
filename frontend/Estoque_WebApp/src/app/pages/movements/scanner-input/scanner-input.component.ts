@@ -10,6 +10,7 @@ import { MovementService } from '../../../core/services/movement.service';
 import { InputMovement } from '../../../shared/models/inputMovement';
 import { Product } from '../../../shared/models/product';
 import { Unit } from '../../../shared/models/unit';
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
 @Component({
   selector: 'app-scanner-input',
   imports: [IconModule,FormsModule,NavBarComponent, FormsModule],
@@ -28,9 +29,18 @@ export class ScannerInputComponent implements AfterViewInit{
 
   icons = icons;
   barcode: string = '';
-  constructor(private fb: FormBuilder, private router: Router, private unitService: UnitService, private movementService: MovementService, private productService: ProductService) {
+
+  sourceOptions = [
+    { label: 'Doação', value: 0 },
+    { label: 'Compra', value: 1 },
+  
+  ];
+
+  constructor(private auth: AuthenticationService, private fb: FormBuilder, private router: Router, private unitService: UnitService, private movementService: MovementService, private productService: ProductService) {
   this.form = this.fb.group({
       batch: this.fb.control('', Validators.required),
+      price: this.fb.control('', Validators.required),
+      sourceType: this.fb.control('', Validators.required),
       quantity: this.fb.control('', Validators.required),
     });
 
@@ -83,25 +93,45 @@ export class ScannerInputComponent implements AfterViewInit{
       this.unitService.getUnitByBatch(batch).subscribe({next: (data) => {
         unit = data;
         if (this.product && data.gtin === this.product.gtin) {
-          unit.quantity += quantity;
-        //   this.unitService.updateUnit(unit).subscribe({next: (data) => {
-        //     let movement: InputMovement = {
-        //       id: 0,
-        //       unitId: unit.id,
-        //       quantity: quantity,
-        //       date: new Date(),
-        //       type: 'input'
-        //     };
-        //     this.movementService.createMovement(movement).subscribe({next: (data) => {
-        //       alert("Unidade atualizada com sucesso");
-        //       this.router.navigate(['/movements']);
-        //     }});/
-         
+          let inputMovement: InputMovement = {
+            productId: this.product?.id ?? 0,
+            batch: batch,
+            quantity: quantity,
+            containerId: unit.id,
+            sourceType: this.form.value.sourceType,
+            sourceDetails: 'Adicionado via Scanner',
+            expiration_date: unit.expiration_date,
+            price: this.form.value.price,
+            userId: this.auth.decodeToken().sub // substituir pelo id do usuário logado
+
+          };
+          this.movementService.createInputMovement(inputMovement).subscribe({next: (data) => {
+            if(data){
+              alert("Movimento de entrada criado com sucesso");
+              this.router.navigate(['/movments']);
+            }else{
+              alert("Erro ao criar movimento de entrada");
+              this.router.navigate(['/movments']);
+            }
+          }})
+        } else {
+          this.router.navigate(['/manage/create/product']);
+          alert("Produto não cadastrado");
         }
-         
-      }});
- 
+      },
+      error: (err) => {
+            this.router.navigate(['/manage/movements/input']);
+
+      }
+    })
     }
   }
-
 }
+
+
+
+        
+                   
+        
+         
+ 
