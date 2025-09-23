@@ -5,6 +5,7 @@ import { PTableComponent } from '../../shared/components/p-table/p-table.compone
 import { ExpirationBatches } from '../../shared/models/expiration-batches';
 import { LastMovements } from '../../shared/models/last-movements';
 import { IconModule, icons } from '../../shared/modules/icon/icon.module';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -14,6 +15,9 @@ import { IconModule, icons } from '../../shared/modules/icon/icon.module';
 })
 export class DashboardComponent {
   icons = icons;
+
+  constructor(private router: Router) {}
+  
   expirationBatches: ExpirationBatches[] = [
     {
       productName: 'Produto A',
@@ -114,5 +118,8 @@ export class DashboardComponent {
       userName: 'Usuário 5'
     }
   ];
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
+  }
 
 }

@@ -6,15 +6,19 @@ import { InputMovement } from '../../../shared/models/inputMovement';
 import { PTableComponent } from '../../../shared/components/p-table/p-table.component';
 import { MovementService } from '../../../core/services/movement.service';
 import { Router } from '@angular/router';
+import { IconModule, icons } from '../../../shared/modules/icon/icon.module';
 
 @Component({
   selector: 'app-movement-input',
-  imports: [],
+  imports: [InputComponent, ReactiveFormsModule, FormTemplateComponent, PTableComponent, IconModule],
+  standalone: true,
+
   templateUrl: './movement-input.component.html',
   styleUrl: './movement-input.component.css'
 })
 export class MovementInputComponent {
-form: FormGroup;
+  icons = icons;
+  form: FormGroup;
 
   sourceOptions = [
     { label: 'Doação', value: 0 },

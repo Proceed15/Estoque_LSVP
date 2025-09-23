@@ -22,6 +22,7 @@ import { ViewCategoriesComponent } from './pages/category/view-categories/view-c
 import { EditCategoryComponent } from './pages/category/edit-category/edit-category.component';
 import { adminGuard } from './core/guards/admin.guard';
 import { MovementInputComponent } from './pages/movements/movement-input/movement-input.component';
+import { ScannerInputComponent } from './pages/movements/scanner-input/scanner-input.component';
 
 export const routes: Routes = [
     //[authGuard] protege as rotas que precisam de autenticação
@@ -41,7 +42,7 @@ export const routes: Routes = [
             {path: 'edit/user/:id', component: EditUserComponent, pathMatch: 'full', canActivate: [adminGuard] },
 
             {path: 'view/products', component: ViewProductsComponent, pathMatch: 'full'},
-            {path: 'create/products', component: CreateProductsComponent, pathMatch: 'full'},
+            {path: 'create/product', component: CreateProductsComponent, pathMatch: 'full'},
             {path: 'edit/products/:id', component: EditProductsComponent, pathMatch: 'full'},
 
             {path: 'view/containers', component: ViewContainersComponent, pathMatch: 'full'},
@@ -52,6 +53,7 @@ export const routes: Routes = [
             {path: 'create/category', component: CreateCategoryComponent, pathMatch: 'full' },
             {path: 'edit/category/:id', component: EditCategoryComponent, pathMatch: 'full'},
 
+            {path: 'movements/scan', component: ScannerInputComponent, pathMatch: 'full'},
             {path:'movements/input', component: MovementInputComponent, pathMatch: 'full'}
 
         ], /*canActivate: [authGuard]*/
