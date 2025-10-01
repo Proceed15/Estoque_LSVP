@@ -11,9 +11,13 @@ import { InputMovement } from '../../../shared/models/inputMovement';
 import { Product } from '../../../shared/models/product';
 import { Unit } from '../../../shared/models/unit';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { InputComponent } from '../../../shared/components/input/input.component';
+import { FormTemplateComponent } from '../../../shared/components/form-template/form-template.component';
 @Component({
   selector: 'app-scanner-input',
-  imports: [IconModule,FormsModule,NavBarComponent, FormsModule],
+  imports: [IconModule,FormsModule,NavBarComponent, FormsModule, InputComponent, FormTemplateComponent],
+  standalone: true,
+  providers: [AuthenticationService],
   templateUrl: './scanner-input.component.html',
   styleUrl: './scanner-input.component.css'
 })

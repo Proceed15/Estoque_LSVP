@@ -6,6 +6,7 @@ import { JsonPipe } from '@angular/common';
 import { UserService } from '../../../core/services/user.service';
 import { User } from './../../../shared/models/user';
 import { Router } from '@angular/router';
+import { onlyLettersAndSpacesValidator } from '../../../core/validators/custom-validators';
 
 @Component({
   selector: 'app-create-user',
@@ -26,7 +27,7 @@ export class CreateUserComponent {
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
     this.form = this.fb.group({
-      name: this.fb.control('', Validators.required),
+      name: this.fb.control('', [Validators.required, onlyLettersAndSpacesValidator()]),
       password: this.fb.control('', [Validators.required, Validators.minLength(6)]),
       role: this.fb.control(null, Validators.required)
     });

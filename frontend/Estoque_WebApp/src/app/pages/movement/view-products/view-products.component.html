@@ -1,6 +1,7 @@
 <app-view-template 
     createText="Novo Produto" 
-    (createNewEvent)=" router.navigate(['manage/create/product']) ">
+    (createNewEvent)=" router.navigate(['manage/create/products']) ">
+    
     <app-p-table 
         [showSearch]="true" 
         (onDelete)="DeleteProduct($event.id)" 
@@ -10,4 +11,5 @@
         [edit]="true" 
         [view]="true">
     </app-p-table>
+    
 </app-view-template>
