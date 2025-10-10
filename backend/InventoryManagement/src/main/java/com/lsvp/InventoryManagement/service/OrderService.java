@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lsvp.InventoryManagement.dto.Fulfillment.FulfillmentItemDTO;
+import com.lsvp.InventoryManagement.dto.Fulfillment.FulfillmentRequestDTO;
+import com.lsvp.InventoryManagement.dto.Movement.OutputCreateDTO;
 import com.lsvp.InventoryManagement.dto.Order.OrderCreateDTO;
 import com.lsvp.InventoryManagement.dto.Order.OrderDTO;
 import com.lsvp.InventoryManagement.dto.OrderItem.OrderItemCreateDTO;
@@ -50,7 +53,7 @@ public class OrderService {
         order.setRequesterName(dto.getRequesterName());
         order.setUser(user);
         order.setDate(LocalDateTime.now());
-        order.setStatus(OrderStatus.PENDENDTE);
+        order.setStatus(OrderStatus.PENDENTE);
 
         List<OrderItem> items = new ArrayList<>();
         for (OrderItemCreateDTO itemDto : dto.getItems()) {
@@ -58,7 +61,7 @@ public class OrderService {
 
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
-            orderItem.setQuantityRequest(itemDto.getQuantityRequested());
+            orderItem.setQuantityRequested(itemDto.getQuantityRequested());
             orderItem.setQuantityFulfilled(0);
             orderItem.setOrder(order);
             items.add(orderItem);
@@ -78,5 +81,47 @@ public class OrderService {
     public List<OrderDTO> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
         return orders.stream().map(mapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void fulfillOrder(Long orderId, FulfillmentRequestDTO dto) {
+
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado!"));
+
+        for (FulfillmentItemDTO itemFulfillment : dto.getFulfillments()) {
+           
+            OutputCreateDTO outputDto = new OutputCreateDTO();
+            outputDto.setUnitId(itemFulfillment.getUnitId());
+            outputDto.setQuantity(itemFulfillment.getQuantity());
+            outputDto.setDestiny(dto.getDestination());
+            outputDto.setUserId(dto.getUserId());
+            outputDto.setOrderItemId(itemFulfillment.getOrderItemId()); 
+
+            movementService.createOutput(outputDto);
+        }
+
+        // Após processar todas as saídas, atualiza o status geral do pedido
+        updateOrderStatus(order);
+    }
+
+    private void updateOrderStatus(Order order) {
+        // Recarrega o pedido para pegar os dados atualizados dos itens
+        Order updatedOrder = orderRepository.findById(order.getId()).get();
+        boolean allItemsFulfilled = true;
+        
+        for (OrderItem item : updatedOrder.getItems()) {
+            if (item.getQuantityFulfilled() < item.getQuantityRequested()) {
+                allItemsFulfilled = false;
+                break;
+            }
+        }
+
+        if (allItemsFulfilled) {
+            updatedOrder.setStatus(OrderStatus.ATENDIDO);
+        } else {
+            updatedOrder.setStatus(OrderStatus.ATENDIDO_PARCIALMENTE);
+        }
+        orderRepository.save(updatedOrder);
     }
 }
