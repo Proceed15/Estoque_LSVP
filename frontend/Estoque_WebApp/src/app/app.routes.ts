@@ -21,8 +21,8 @@ import { CreateCategoryComponent } from './pages/category/create-category/create
 import { ViewCategoriesComponent } from './pages/category/view-categories/view-categories.component';
 import { EditCategoryComponent } from './pages/category/edit-category/edit-category.component';
 import { adminGuard } from './core/guards/admin.guard';
-import { ViewMovementsComponent } from './pages/movement/view/view-movements.component';
-import { EditMovementsComponent } from './pages/movement/edit/edit-movements.component';
+import { ViewMovementsComponent } from './pages/movements/view/view-movements.component';
+import { EditMovementsComponent } from './pages/movements/edit/edit-movements.component';
 import { MovementInputComponent } from './pages/movements/movement-input/movement-input.component';
 import { ScannerInputComponent } from './pages/movements/scanner-input/scanner-input.component';
 

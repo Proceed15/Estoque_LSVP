@@ -59,16 +59,16 @@ export class ViewMovementsComponent implements OnInit, OnDestroy {
       }
     });
   }
-/*
-  DeleteMovement(id: string): void {
+
+  DeleteMovement(id: number): void {
     try {
-      this.MovementService.deleteMovement(MovementId);
-      this.Movements = this.Movements.filter(Movement => MovementId !== id);
+      this.MovementService.deleteMovement(id);
+      this.Movements = this.Movements.filter(movement => movement.id !== id);
     } catch (error) {
-      console.error('Erro ao deletar Movimentação:', error);
+      console.error('Erro ao deletar essa Movimentação!', error);
     }
   }
-*/
+
   EditMovement(id: number): void {
     this.router.navigate(['manage/edit/movements', id]);
   }
