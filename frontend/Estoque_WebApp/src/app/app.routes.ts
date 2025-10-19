@@ -23,6 +23,8 @@ import { EditCategoryComponent } from './pages/category/edit-category/edit-categ
 import { adminGuard } from './core/guards/admin.guard';
 import { MovementInputComponent } from './pages/movements/movement-input/movement-input.component';
 import { ScannerInputComponent } from './pages/movements/scanner-input/scanner-input.component';
+import { CookDashboardComponent } from './pages/cook-dashboard/cook-dashboard.component';
+import { KitchenOrderComponent } from './pages/request/kitchen-order/kitchen-order.component';
 
 export const routes: Routes = [
     //[authGuard] protege as rotas que precisam de autenticação
@@ -31,6 +33,9 @@ export const routes: Routes = [
    { path: 'login', component: LoginComponent, canActivate: [loginGuard] }, //rota de login
    {path: '', redirectTo: 'dashboard', pathMatch: 'full' }, //rota padrão redireciona para o dashboard
    {path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [authGuard] }, //rota do dashboard
+   {path: 'dashboard/cook', component: CookDashboardComponent, pathMatch: 'full', canActivate: [authGuard] }, //rota do dashboard da cozinha
+   {path:'kitchen/request', component: KitchenOrderComponent, pathMatch: 'full', canActivate: [authGuard] }, //rota do dashboard da cozinha
+  
    //rotas de gerenciamento 
    { path: 'manage', component: ManageLayoutComponent,
     //filhos da rota de gerenciamento

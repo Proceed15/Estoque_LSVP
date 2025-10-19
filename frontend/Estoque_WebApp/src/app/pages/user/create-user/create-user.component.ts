@@ -7,6 +7,7 @@ import { UserService } from '../../../core/services/user.service';
 import { User } from './../../../shared/models/user';
 import { Router } from '@angular/router';
 import { onlyLettersAndSpacesValidator } from '../../../core/validators/custom-validators';
+import { faLaughBeam } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-create-user',
@@ -22,7 +23,7 @@ export class CreateUserComponent {
   roleOptions = [
     { label: 'Administrador', value: 0 },
     { label: 'Gestor de Estoque', value: 1 },
-    { label: 'Cozinha', value: 2 }
+    { label: 'Cozinha', value: 2 },
   ];
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
