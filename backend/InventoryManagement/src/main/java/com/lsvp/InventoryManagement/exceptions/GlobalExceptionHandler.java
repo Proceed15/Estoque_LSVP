@@ -30,7 +30,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getMessage());
     }
 
-    @ExceptionHandler(BusinessException.class)
+    //@ExceptionHandler(BadRequestException.class) // Estava Duplicado
+    @ExceptionHandler(BusinessException.class) // Novo Handler para BusinessException
     public ResponseEntity<String> handleBusinessException(BusinessException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
