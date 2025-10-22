@@ -26,11 +26,11 @@ public class Category {
 
     @Column(name = "cat_createdAt", nullable = false)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Column(name = "cat_updatedAt", nullable = true)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @Column(name = "cat_type", length = 30, nullable = false)
     private FoodType food_type;

@@ -63,6 +63,8 @@ public class MovementService {
     private IOrderItemRepository orderItemRepository;
 
 
+    //ENTRADA
+
     @Transactional
     public MovementDTO createInput(InputCreateDTO dto){
         
@@ -89,6 +91,8 @@ public class MovementService {
         return mapper.toDTO(repository.save(movement));
     }
     
+
+    //SAIDA
 
     @Transactional
     public MovementDTO createOutput(OutputCreateDTO dto){
@@ -138,6 +142,10 @@ public class MovementService {
         return mapper.toDTO(repository.save(movement));
     }
 
+
+    //TRANSFERENCIA 
+
+
     @Transactional
     public MovementDTO createTransfer(TransferCreateDTO dto){
         
@@ -159,6 +167,10 @@ public class MovementService {
         return mapper.toDTO(repository.save(movement));
 
     }
+
+
+
+    //CONSUMO
 
     @Transactional
     public MovementDTO createConsumption(ConsumptionCreateDTO dto) {
@@ -195,6 +207,8 @@ public class MovementService {
     }
 
 
+    //AJUSTE
+
     @Transactional
     public MovementDTO createOutputAdjustment(StockAdjustmentDTO dto) {
 
@@ -225,6 +239,9 @@ public class MovementService {
     }
 
 
+    // -------- ROTAS PADRÕES ---------- // 
+
+    
     public MovementDTO getMovementById(Long id){
         Movement movement = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Movimentação nao encontrada!!"));
 

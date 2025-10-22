@@ -37,7 +37,7 @@ public class CategoryService {
         Category category = mapper.toEntity(dto);
 
         ZoneId zone_id = ZoneId.of("America/Sao_Paulo");
-        category.setCreated_at(LocalDateTime.now(zone_id));
+        category.setCreatedAt(LocalDateTime.now(zone_id));
 
         return mapper.toDTO(repository.save(category));
     }
@@ -88,7 +88,7 @@ public class CategoryService {
             categoryUpdated.setMax_quantity(dto.getMax_quantity());
 
         ZoneId zone_id = ZoneId.of("America/Sao_Paulo");
-        categoryUpdated.setUpdated_at(LocalDateTime.now(zone_id));
+        categoryUpdated.setUpdatedAt(LocalDateTime.now(zone_id));
 
         return mapper.toDTO(repository.save(categoryUpdated));
     }

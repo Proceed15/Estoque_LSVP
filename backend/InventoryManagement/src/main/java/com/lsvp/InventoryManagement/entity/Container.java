@@ -30,7 +30,6 @@ public class Container {
     @Column(name = "con_description", length = 100)
     private String description;
 
-
     @OneToMany(mappedBy = "container", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
