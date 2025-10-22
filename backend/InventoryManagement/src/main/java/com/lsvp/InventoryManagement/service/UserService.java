@@ -17,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class UserService {
@@ -84,6 +88,25 @@ public class UserService {
     @Transactional
     public List<UserDTO> getAllUsers(){
         return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
+    }
+
+
+    //https://fabiano-eprogramar.medium.com/api-rest-com-paginação-usando-spring-data-e-query-9eddb29c9223
+    @Transactional
+    public Page<UserDTO> getUsersPaged(int page, int limit, String name){
+        if(page < 1) page = 1; // pages are 1-based in API
+        Pageable pageable = PageRequest.of(page - 1, limit);
+
+        Page<User> usersPage;
+        if(name == null || name.isBlank()){
+            usersPage = repository.findAll(pageable);
+        } else {
+            usersPage = repository.findByNameContainingIgnoreCase(name, pageable);
+        }
+
+        List<UserDTO> dtos = usersPage.stream().map(mapper::toDTO).collect(Collectors.toList());
+
+        return new PageImpl<>(dtos, pageable, usersPage.getTotalElements());
     }
 
 

@@ -1,4 +1,4 @@
-package com.lsvp.InventoryManagement.controller;
+package com.lsvp.InventoryManagement.controller.User;
 
 import com.lsvp.InventoryManagement.dto.User.UserUpdateDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
