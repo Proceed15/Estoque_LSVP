@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import com.lsvp.InventoryManagement.dto.Movement.ConsumptionCreateDTO;
 import com.lsvp.InventoryManagement.dto.Movement.InputCreateDTO;
 import com.lsvp.InventoryManagement.dto.Movement.MovementCreateDTO;
 import com.lsvp.InventoryManagement.dto.Movement.MovementDTO;
 import com.lsvp.InventoryManagement.dto.Movement.OutputCreateDTO;
+import com.lsvp.InventoryManagement.dto.Movement.StockAdjustmentDTO;
 import com.lsvp.InventoryManagement.dto.Movement.TransferCreateDTO;
 import com.lsvp.InventoryManagement.entity.Unit;
 import com.lsvp.InventoryManagement.entity.User;
+import com.lsvp.InventoryManagement.enums.ContainerType;
 import com.lsvp.InventoryManagement.enums.MovementType;
 import com.lsvp.InventoryManagement.entity.Container;
 import com.lsvp.InventoryManagement.entity.Movement;
@@ -92,12 +95,15 @@ public class MovementService {
 
         Unit unit = unitRepository.findById(dto.getUnitId()).orElseThrow(() -> new ResourceNotFoundException("Unidade não encontrada!!"));
         User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado!!"));
+        Container container = containerRepository.findById(dto.getDestinationContainerId()).orElseThrow(() -> new ResourceNotFoundException("Container de destino não encontrado!!"));
 
         if(unit.getQuantity() < dto.getQuantity()){
-            throw new ResourceNotFoundException("Estoque insuficiente!!");
+            throw new BusinessException("Estoque insuficiente!!");
         }
 
         String origin = (unit.getContainer() != null) ? unit.getContainer().getCode() : "Estoque Geral";
+
+        unit.setContainer(container);
 
         unit.setQuantity(unit.getQuantity() - dto.getQuantity());
         unitRepository.save(unit);
@@ -106,6 +112,8 @@ public class MovementService {
         movement.setDate(LocalDateTime.now());
         movement.setType(MovementType.SAIDA);
         movement.setOrigin(origin);
+        movement.setDestiny(container.getCode());
+        
 
         //Logica para incrementar quantityFulfilled do Order Fulfill
         if (dto.getOrderItemId() != null) {
@@ -151,6 +159,71 @@ public class MovementService {
         return mapper.toDTO(repository.save(movement));
 
     }
+
+    @Transactional
+    public MovementDTO createConsumption(ConsumptionCreateDTO dto) {
+
+        Unit unit = unitRepository.findById(dto.getUnitId())
+                .orElseThrow(() -> new ResourceNotFoundException("Unidade não encontrada!"));
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado!"));
+
+        // Validação 1: Unidade está em local de preparação?
+        if (unit.getContainer() == null || unit.getContainer().getType() != ContainerType.PREPARACAO) {
+            throw new BusinessException("A unidade " + unit.getId() + " não está em uma localização de preparação (cozinha).");
+        }
+
+        // Validação 2: Quantidade suficiente?
+        if (unit.getQuantity() < dto.getQuantityConsumed()) {
+            throw new BusinessException("Quantidade insuficiente na unidade " + unit.getId() + ". Disponível: " + unit.getQuantity());
+        }
+
+        // Atualiza a quantidade da unidade
+        unit.setQuantity(unit.getQuantity() - dto.getQuantityConsumed());
+        unitRepository.save(unit);
+
+        Movement movement = new Movement(); // Criado manualmente pois não há DTO de origem
+        movement.setUnit(unit);
+        movement.setUser(user);
+        movement.setType(MovementType.CONSUMO);
+        movement.setQuantity(dto.getQuantityConsumed());
+        movement.setDate(LocalDateTime.now());
+        movement.setOrigin(unit.getContainer().getCode()); // Origem é o código da cozinha
+        movement.setDestiny(null); // Consumido
+
+        return mapper.toDTO(repository.save(movement));
+    }
+
+
+    @Transactional
+    public MovementDTO createOutputAdjustment(StockAdjustmentDTO dto) {
+
+        Unit unit = unitRepository.findById(dto.getUnitId())
+            .orElseThrow(() -> new ResourceNotFoundException("Unidade não encontrada! ID: " + dto.getUnitId()));
+        User user = userRepository.findById(dto.getUserId())
+            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado! ID: " + dto.getUserId()));
+
+        if (unit.getQuantity() < dto.getQuantity()) {
+            throw new BusinessException("Estoque insuficiente na unidade para realizar o ajuste.");
+        }
+
+        unit.setQuantity(unit.getQuantity() - dto.getQuantity());
+        unitRepository.save(unit);
+
+        Movement movement = new Movement(); // Criado manualmente
+        movement.setQuantity(dto.getQuantity());
+        movement.setUnit(unit);
+        movement.setUser(user);
+        movement.setDate(LocalDateTime.now());
+        movement.setType(MovementType.SAIDA); // Ajuste de saída ainda é do tipo SAIDA
+        movement.setDestiny(dto.getReason().toString()); // Usa o motivo como destino
+        if (unit.getContainer() != null) {
+            movement.setOrigin(unit.getContainer().getCode());
+        }
+
+        return mapper.toDTO(repository.save(movement));
+    }
+
 
     public MovementDTO getMovementById(Long id){
         Movement movement = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Movimentação nao encontrada!!"));

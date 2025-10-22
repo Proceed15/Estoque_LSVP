@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lsvp.InventoryManagement.dto.Movement.ConsumptionCreateDTO;
 import com.lsvp.InventoryManagement.dto.Movement.InputCreateDTO;
 import com.lsvp.InventoryManagement.dto.Movement.MovementCreateDTO;
 import com.lsvp.InventoryManagement.dto.Movement.MovementDTO;
 import com.lsvp.InventoryManagement.dto.Movement.OutputCreateDTO;
+import com.lsvp.InventoryManagement.dto.Movement.StockAdjustmentDTO;
 import com.lsvp.InventoryManagement.dto.Movement.TransferCreateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductCreateDTO;
 import com.lsvp.InventoryManagement.dto.Product.ProductDTO;
@@ -52,6 +54,20 @@ public class MovementController {
             return ResponseEntity.ok(movementService.createTransfer(dto));
         }
 
+    @PostMapping("/consumption")
+    public ResponseEntity<MovementDTO> createConsumption(@Valid @RequestBody ConsumptionCreateDTO dto) {
+        MovementDTO movement = movementService.createConsumption(dto);
+        return ResponseEntity.ok(movement);
+    }
+
+
+    @PostMapping("/adjustments/output")
+    public ResponseEntity<MovementDTO> createOutputAdjustment(@Valid @RequestBody StockAdjustmentDTO dto) {
+        MovementDTO movement = movementService.createOutputAdjustment(dto);
+        return ResponseEntity.ok(movement);
+    }
+
+    
     @GetMapping
         public ResponseEntity<List<MovementDTO>> getAllMovements(){
             return ResponseEntity.ok(movementService.getAllMovements());

@@ -14,6 +14,7 @@ import com.lsvp.InventoryManagement.dto.Movement.OutputCreateDTO;
 import com.lsvp.InventoryManagement.dto.Order.OrderCreateDTO;
 import com.lsvp.InventoryManagement.dto.Order.OrderDTO;
 import com.lsvp.InventoryManagement.dto.OrderItem.OrderItemCreateDTO;
+import com.lsvp.InventoryManagement.entity.Container;
 import com.lsvp.InventoryManagement.entity.Order;
 import com.lsvp.InventoryManagement.entity.OrderItem;
 import com.lsvp.InventoryManagement.entity.Product;
@@ -21,6 +22,7 @@ import com.lsvp.InventoryManagement.entity.User;
 import com.lsvp.InventoryManagement.enums.OrderStatus;
 import com.lsvp.InventoryManagement.exceptions.ResourceNotFoundException;
 import com.lsvp.InventoryManagement.mapper.IOrderMapper;
+import com.lsvp.InventoryManagement.repository.IContainerRepository;
 import com.lsvp.InventoryManagement.repository.IOrderRepository;
 import com.lsvp.InventoryManagement.repository.IProductRepository;
 import com.lsvp.InventoryManagement.repository.IUserRepository;
@@ -38,6 +40,9 @@ public class OrderService {
 
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private IContainerRepository containerRepository;
 
     @Autowired
     private IOrderMapper mapper;
@@ -89,12 +94,17 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado!"));
 
+        Container destinationContainer = containerRepository.findByCode(dto.getDestination())
+            .orElseThrow(() -> new ResourceNotFoundException("Container/Localização de destino '" + dto.getDestination() + "' não encontrado!"));
+    
+        Long destinationContainerId = destinationContainer.getId();
+
         for (FulfillmentItemDTO itemFulfillment : dto.getFulfillments()) {
            
             OutputCreateDTO outputDto = new OutputCreateDTO();
             outputDto.setUnitId(itemFulfillment.getUnitId());
             outputDto.setQuantity(itemFulfillment.getQuantity());
-            outputDto.setDestiny(dto.getDestination());
+            outputDto.setDestinationContainerId(destinationContainerId);
             outputDto.setUserId(dto.getUserId());
             outputDto.setOrderItemId(itemFulfillment.getOrderItemId()); 
 
