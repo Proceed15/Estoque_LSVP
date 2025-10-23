@@ -21,7 +21,7 @@ public class Unit {
     private String batch;
 
     @Column(name = "unt_expiration_date", nullable = false)
-    private LocalDate expiration_date;
+    private LocalDate expirationDate;
 
     @Column(name = "unt_quantity", nullable = false)
     private int quantity;

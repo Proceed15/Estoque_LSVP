@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lsvp.InventoryManagement.dto.Fulfillment.FulfillmentItemDTO;
 import com.lsvp.InventoryManagement.dto.Fulfillment.FulfillmentRequestDTO;
@@ -26,8 +31,9 @@ import com.lsvp.InventoryManagement.repository.IContainerRepository;
 import com.lsvp.InventoryManagement.repository.IOrderRepository;
 import com.lsvp.InventoryManagement.repository.IProductRepository;
 import com.lsvp.InventoryManagement.repository.IUserRepository;
+import java.util.Arrays;
+import org.springframework.data.domain.Sort;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class OrderService {
@@ -133,5 +139,30 @@ public class OrderService {
             updatedOrder.setStatus(OrderStatus.ATENDIDO_PARCIALMENTE);
         }
         orderRepository.save(updatedOrder);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<OrderDTO> getPendingOrders(int page, int limit) {
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by("date").descending()); // Ordena por data descendente
+        List<OrderStatus> statuses = Arrays.asList(OrderStatus.PENDENTE, OrderStatus.ATENDIDO_PARCIALMENTE);
+        Page<Order> ordersPage = orderRepository.findByStatusIn(statuses, pageable);
+        List<OrderDTO> dtos = ordersPage.stream().map(mapper::toDTO).collect(Collectors.toList());
+        return new PageImpl<>(dtos, pageable, ordersPage.getTotalElements());
+    }
+
+
+    @Transactional(readOnly = true)
+    public Page<OrderDTO> getAllOrdersSorted(int page, int limit, String sortParam) {
+        // Lógica para parsear o sortParam (ex: "date,desc")
+        String[] sortParts = sortParam.split(",");
+        String property = sortParts[0];
+        Sort.Direction direction = (sortParts.length > 1 && sortParts[1].equalsIgnoreCase("asc"))
+                ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(direction, property));
+
+        Page<Order> ordersPage = orderRepository.findAll(pageable);
+        List<OrderDTO> dtos = ordersPage.stream().map(mapper::toDTO).collect(Collectors.toList());
+        return new PageImpl<>(dtos, pageable, ordersPage.getTotalElements());
     }
 }

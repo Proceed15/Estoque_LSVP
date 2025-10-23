@@ -84,7 +84,7 @@ public class UnitService {
             Unit unitUpdated = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unidade nao encontrada!!"));
 
             unitUpdated.setBatch(dto.getBatch());
-            unitUpdated.setExpiration_date(dto.getExpiration_date());
+            unitUpdated.setExpirationDate(dto.getExpiration_date());
     //     
             unitUpdated.setPrice(dto.getPrice());
 

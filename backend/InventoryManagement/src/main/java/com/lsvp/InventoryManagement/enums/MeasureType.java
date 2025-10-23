@@ -4,5 +4,6 @@ public enum MeasureType {
     KG,
     G,
     L,
-    ML
+    ML,
+    UN
 }
