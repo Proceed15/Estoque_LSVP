@@ -37,7 +37,7 @@ public class CategoryService {
         Category category = mapper.toEntity(dto);
 
         ZoneId zone_id = ZoneId.of("America/Sao_Paulo");
-        category.setCreated_at(LocalDateTime.now(zone_id));
+        category.setCreatedAt(LocalDateTime.now(zone_id));
 
         return mapper.toDTO(repository.save(category));
     }
@@ -77,8 +77,8 @@ public class CategoryService {
         if(!dto.getDescription().isEmpty())
             categoryUpdated.setDescription(dto.getDescription());
         
-        if(dto.getFood_type() != null)
-            categoryUpdated.setFood_type(dto.getFood_type());
+        if(dto.getFoodType() != null)
+            categoryUpdated.setFoodType(dto.getFoodType());
 
         // Java não deixa comparar int com null
         if(dto.getMin_quantity() >= 1)
@@ -88,7 +88,7 @@ public class CategoryService {
             categoryUpdated.setMax_quantity(dto.getMax_quantity());
 
         ZoneId zone_id = ZoneId.of("America/Sao_Paulo");
-        categoryUpdated.setUpdated_at(LocalDateTime.now(zone_id));
+        categoryUpdated.setUpdatedAt(LocalDateTime.now(zone_id));
 
         return mapper.toDTO(repository.save(categoryUpdated));
     }

@@ -14,7 +14,7 @@ import java.util.Set;
 // Retirei por não precisarmos agora
 
 @Entity
-@Table(name = "users")
+@Table(name = "tbl_user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

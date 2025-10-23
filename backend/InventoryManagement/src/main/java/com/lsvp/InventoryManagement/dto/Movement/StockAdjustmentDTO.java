@@ -1,24 +1,27 @@
 package com.lsvp.InventoryManagement.dto.Movement;
 
+import com.lsvp.InventoryManagement.enums.AdjustmentReason;
+
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class OutputCreateDTO {
+public class StockAdjustmentDTO {
 
     @NotNull(message = "O ID da unidade é obrigatório")
     private Long unitId;
 
-    @Min(1)
+    @Min(value = 1, message = "A quantidade deve ser no mínimo 1")
     private int quantity;
 
-    @NotNull(message = "O ID do container de destino é obrigatório")
-    private Long destinationContainerId;
+    @NotNull(message = "O motivo do ajuste é obrigatório")
+    private AdjustmentReason reason;
+
+    private String observation; // Opcional
 
     @NotNull(message = "O ID do usuário é obrigatório")
     private Long userId;
 
-    private Long orderItemId;
+
 }
