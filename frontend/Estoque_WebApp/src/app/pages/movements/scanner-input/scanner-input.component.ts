@@ -33,6 +33,8 @@ export class ScannerInputComponent implements AfterViewInit, OnDestroy {
   public manualControl: boolean = false;
 
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
+  @ViewChild('buttons') button!: ElementRef<HTMLInputElement>;
+
 
   icons = icons;
   barcode: string = '';
@@ -154,6 +156,21 @@ export class ScannerInputComponent implements AfterViewInit, OnDestroy {
       }
     })
     }
+  }
+
+  manualController(): void{
+    this.manualControl = !this.manualControl;
+    if(this.manualControl == true){
+      this.input.nativeElement.style.opacity = '1';
+      this.input.nativeElement.focus();
+      this.button.nativeElement.style.background = 'none'
+    }else{
+      this.input.nativeElement.style.opacity = '0';
+      this.input.nativeElement.value = '';
+      this.button.nativeElement.style.backgroundColor = '#1976d2'
+
+    }
+  
   }
 }
 

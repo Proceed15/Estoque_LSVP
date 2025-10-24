@@ -33,6 +33,9 @@ button:hover {
 }
 input{
   opacity:0; position:absolute; 
+  height: 40px;
+  width: 500px;
+  border-radius: 2px;
 }
 
 .error-message {
