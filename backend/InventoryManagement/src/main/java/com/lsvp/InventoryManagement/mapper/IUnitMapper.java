@@ -23,6 +23,7 @@ public interface IUnitMapper {
     UnitDTO toDTO(Unit unit);
     
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "dto.expiration_date", target = "expirationDate")
     Unit fromInputDTO(InputCreateDTO dto, Product product, Container container);
 
     @Mapping(source = "id", target = "unitId")
