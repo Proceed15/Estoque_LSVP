@@ -48,6 +48,8 @@ public class ContainerService {
         Container containerUpdated = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Conteiner não encontrado!!"));
 
         containerUpdated.setCode(dto.getCode());
+        containerUpdated.setDescription(dto.getDescription());
+        containerUpdated.setType(dto.getType());
 
         return mapper.toDTO(repository.save(containerUpdated));
 

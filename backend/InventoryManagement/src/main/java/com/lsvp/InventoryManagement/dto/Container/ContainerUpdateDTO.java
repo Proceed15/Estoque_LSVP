@@ -18,7 +18,7 @@ public class ContainerUpdateDTO {
     @Schema(description = "Descrição do Container/Localização", example = "Container de Arroz 1 / Cozinha Principal")
     private String description; 
 
-    @Schema(description = "Tipo do Container/Localização", example = "STORAGE")
+    @Schema(description = "Tipo do Container/Localização", example = "ESTOQUE")
     @NotNull(message = "Type is required")
     private ContainerType type; 
 
