@@ -67,8 +67,7 @@ export const routes: Routes = [
 
             {path: 'movements/scan', component: ScannerInputComponent, pathMatch: 'full'},
             {path:'movements/input', component: MovementInputComponent, pathMatch: 'full'},
-            /*{path:'view/movements',component: ViewMovementsComponent, pathMatch: 'full'},*/
-
+  
             {path: 'view/units', component: ViewUnitComponent, pathMatch: 'full'},
             {path: 'edit/unit/:id', component:EditUnitComponent, pathMatch: 'full'},
             {path: 'view/movements', component: ViewMovementsComponent, pathMatch: 'full', /*canActivate:[authGuard]*/},
