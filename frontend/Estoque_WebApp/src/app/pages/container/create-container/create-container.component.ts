@@ -19,16 +19,18 @@ templateUrl: './create-container.component.html',
 export class CreateContainerComponent extends BaseCreateComponent {
  form: FormGroup;
 
-  roleOptions = [
-    { label: 'Administrador', value: 0 },
-    { label: 'Gestor de Estoque', value: 1 },
-    { label: 'Cozinha', value: 2 }
+  typeOptions = [
+    { label: 'Estoque', value: 0 },
+    { label: 'Preparação', value: 1 },
+    { label: 'Descarte', value: 2 }
   ];
 
   constructor(fb: FormBuilder, private containerService: ContainerService, router: Router) {
     super(router, fb);
     this.form = fb.group({
       code: this.fb.control('', [Validators.required, Validators.maxLength(20)]),
+      description: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
+      type: this.fb.control('', [Validators.required])
     });
   }
 
@@ -36,6 +38,8 @@ export class CreateContainerComponent extends BaseCreateComponent {
     const container: Container = {
     id: 0,
     code: this.form.value.code,
+    description: this.form.value.description,
+    type: this.form.value.type,
  
   };
     this.containerService.registerContainer(container).subscribe({

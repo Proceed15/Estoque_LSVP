@@ -45,8 +45,8 @@ export class ViewProductsComponent implements OnInit, OnDestroy {
         this.products = data;
         //delete filed createdAt and updatedAt from products
       this.products?.forEach(product => {
-        delete product.createdAt;
-        delete product.updatedAt;
+        delete product.created_at;
+        delete product.updated_at;
         });
 
    

@@ -15,5 +15,19 @@
         placeholder="Digite o código do container"
         
     ></app-input>
+    <app-input
+        [control]="getControl('description')"
+        type="text"
+        label="Descrição"
+        placeholder="Digite a descrição do container"
+        
+    ></app-input>
+    <app-input
+        [control]="getControl('type')"
+        type="select"
+        label="Tipo"
+        [options]="typeOptions"
+        placeholder="Selecione o tipo do container"
+    ></app-input>
 
 </app-form-template>

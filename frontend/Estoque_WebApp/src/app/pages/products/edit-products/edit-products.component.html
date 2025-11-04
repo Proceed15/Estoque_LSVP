@@ -11,7 +11,7 @@
     type="text"
     label="GTIN"
     placeholder="Digite o GTIN do produto"
-    maskUse="00000000000"
+    maskUse="0000000000000"
   ></app-input>
 
   <!-- Medida -->
@@ -26,27 +26,19 @@
   <!-- Tipo de Medida -->
   <app-input
     [control]="getControl('measureType')"
-    type="text"
+    type="select"
     label="Tipo de Medida"
-    placeholder="Ex: g, kg, ml"
+    placeholder="Selecione o tipo de medida"
+    [options]="measureOption"
   ></app-input>
 
   <!-- Categoria -->
-  <app-input
-    [control]="getControl('categoryId')"
-    type="number"
-    label="Categoria"
-    placeholder="Digite o ID da categoria"
-  ></app-input>
-
-  <!-- Caso queira usar select futuramente -->
-  <!--
-  <app-input
-    [control]="getControl('categoryId')"
-    type="select"
-    label="Categoria"
-    placeholder="Selecione a categoria"
-    [options]="categoryOptions"
-  ></app-input>
-  -->
+  <app-p-table
+    #categoryTable
+    [data]="categories"
+    [title]="'Selecione uma Categoria'"
+    [select]="true"
+    [showSearch]="true"
+    (onSelect)="handleCategorySelection($event)" >
+  </app-p-table>
 </app-form-template>

@@ -49,7 +49,7 @@ export class ViewCategoriesComponent implements OnInit, OnDestroy {
       next: (categories) => {
         this.categories = categories.map((cat: Category) => ({
           ...cat,
-          created_at: new Date(cat.created_at),
+          created_at: cat.created_at ? new Date(cat.created_at) : undefined,
           updated_at: cat.updated_at ? new Date(cat.updated_at) : undefined
          
         

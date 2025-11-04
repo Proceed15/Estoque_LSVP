@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../../shared/models/category';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class CategoryService {
   }
 
   // Método para registrar uma categoria
-  public registerCategory(category: Category): Observable<Category> {
+  public registerCategory(category: any): Observable<Category> {
     return this.http.post<Category>(this.categoryLink, category);
   }
 
@@ -29,8 +29,15 @@ export class CategoryService {
   }
 
   // Método para atualizar uma categoria
-  public updateCategory(categoryId: number, category: Partial<Category>): Observable<Category> {
-    return this.http.put<Category>(`${this.categoryLink}/${categoryId}`, category);
+  public updateCategory(categoryId: number, categoryPayload: any): Observable<Category> {
+    const params = new HttpParams()
+      .set('description', categoryPayload.description)
+      .set('foodType', categoryPayload.foodType)
+      .set('min_quantity', categoryPayload.min_quantity)
+      .set('max_quantity', categoryPayload.max_quantity);
+
+    // Envia o PUT com o corpo nulo e os dados como parâmetros de URL
+    return this.http.put<Category>(`${this.categoryLink}/${categoryId}`, null, { params });
   }
 
   // Método para deletar uma categoria

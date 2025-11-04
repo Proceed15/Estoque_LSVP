@@ -2,10 +2,11 @@ export interface Product {
     id?: number;
     gtin: string;
     measure: number;
-    measureType: string;
+    measure_type: string;
     description: string;
-    categoryId: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    category_id: number;
+    created_at?: Date;
+    updated_at?: Date;
   
 }
+  

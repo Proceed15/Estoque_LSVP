@@ -69,11 +69,9 @@ export class UsersViewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userService.getAllUsers().subscribe({
       next: (data: User[]) => {
         this.users = data;
-        this.users.forEach(user => {
-          delete user.id;
-
-      },
-    );
+        // A linha 'delete user.id;' foi removida, pois estava incorretamente deletando a propriedade ID dos objetos de usuário.
+        // Isso causava problemas na identificação de usuários para exclusão e outras operações.
+        // O loop `forEach` também estava sintaticamente incorreto e não é mais necessário após remover `delete user.id;`.
       },
       error: (error) => {
         console.error('Erro ao buscar usuários:', error);
@@ -84,28 +82,41 @@ export class UsersViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Método para deletar um usuário
   DeleteUser(userId: number): void {
-  const token = this.auth.decodeToken();
-  if (token && token.sub) {
-    //pegar o nome do usuário na lista  user pelo id
-    const userName = this.users.find(user => user.id === userId)?.name;
+    const token = this.auth.decodeToken();
+    if (!token || !token.sub) {
+      console.error('Usuário não autenticado ou token inválido.');
+      // Opcionalmente, exiba um modal de erro ou redirecione para o login
+      return;
+    }
 
-    console.log('Nome do usuário:', userName);
-    console.log('Usuário logado:', token.sub);
-    if (userName === token.sub) {
+    const loggedInUserName = token.sub;
+    const userToDelete = this.users.find(user => user.id === userId);
+
+    if (!userToDelete) {
+      console.error(`Usuário com ID ${userId} não encontrado na lista local. Possível dessincronização de dados.`);
+      // Considere recarregar os usuários ou exibir um erro para o usuário.
+      return;
+    }
+
+    const userNameToDelete = userToDelete.name;
+
+    if (userNameToDelete === loggedInUserName) {
       // Se o usuário for o mesmo que está logado, não permite a exclusão
       console.error('Não é possível deletar o próprio usuário.');
       this.exceptionUser.toggle();
-
       return;
-    }else{
-        try {
-            this.userService.deleteUser(userId); // Chama o serviço para deletar o usuário
-            this.users = this.users.filter(user => user.id !== userId); // Atualiza a lista de usuários removendo o usuário deletado
-          }catch (error) {
-            console.error('Erro ao deletar usuário:', error);
-          }
     }
-  }
+
+    // Prossiga com a exclusão se não for autoexclusão
+    this.userService.deleteUser(userId).subscribe({
+      next: () => {
+        this.users = this.users.filter(user => user.id !== userId); // Atualiza a UI após exclusão bem-sucedida
+      },
+      error: (error) => {
+        console.error('Erro ao deletar usuário:', error);
+        // Implemente uma exibição de erro mais amigável ao usuário, se necessário
+      }
+    });
    
   }
 

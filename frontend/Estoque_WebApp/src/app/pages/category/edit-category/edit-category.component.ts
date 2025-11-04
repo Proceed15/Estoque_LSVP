@@ -18,8 +18,8 @@ export class EditCategoryComponent extends BaseCreateComponent {
   id: string = '';
 
   typeOptions = [
-    { label: 'Perecível', value: 0 },
-    { label: 'Não-Perecível', value: 1 },
+    { label: 'Perecível', value: 'PERECIVEL' },
+    { label: 'Não-Perecível', value: 'NAO_PERECIVEL' },
   ];
 
   constructor(fb: FormBuilder, private categoryService: CategoryService, router: Router, private route: ActivatedRoute) {
@@ -28,13 +28,17 @@ export class EditCategoryComponent extends BaseCreateComponent {
     this.form = this.fb.group({
       description: this.fb.control('', Validators.required),
       type: this.fb.control('', Validators.required),
+      min_quantity: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(1000000)]),
+      max_quantity: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(1000000)])
     });
     if (this.id !== '') {
       this.categoryService.getCategoryById(Number(this.id)).subscribe({
         next: category => {
           this.form.patchValue({
             description: category.description,
-            type: category.food_type
+            type: category.food_type === 0 ? 'PERECIVEL' : 'NAO_PERECIVEL',
+            min_quantity: category.min_quantity,
+            max_quantity: category.max_quantity
           });
         },
         error: () => {
@@ -48,14 +52,13 @@ export class EditCategoryComponent extends BaseCreateComponent {
   onSubmit(): void {
     const idN = Number.parseInt(this.id);
 
-    const category = {
-      id: idN,
+    const categoryPayload = {
       description: this.form.value.description,
-      updated_at: new Date(),
-      food_type: this.form.value.type,
+      foodType: this.form.value.type,
+      min_quantity: this.form.value.min_quantity,
+      max_quantity: this.form.value.max_quantity
     };
-
-    this.categoryService.updateCategory(idN, category).subscribe({
+    this.categoryService.updateCategory(idN, categoryPayload).subscribe({
       next: () => {
         this.router.navigate(['/manage/view/categories']);
       },

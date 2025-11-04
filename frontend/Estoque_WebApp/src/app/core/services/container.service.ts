@@ -32,7 +32,7 @@ export class ContainerService {
   }
 
   // Método para atualizar um container
-  public updateContainer(containerId: number, container: Partial<Container>): Observable<Container> {
+  public updateContainer(containerId: number, container: Container): Observable<Container> {
     return this.http.put<Container>(`${this.containerLink}/${containerId}`, container);
   }
 
