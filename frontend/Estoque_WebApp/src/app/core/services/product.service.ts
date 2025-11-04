@@ -15,7 +15,7 @@ export class ProductService {
   
   //Método para registrar um Produto
   public registerProduct(product: ProductCreate): Observable<ProductCreate> {
-    return this.http.post<Product>(this.productLink, product);
+    return this.http.post<ProductCreate>(this.productLink, product);
 
 }
 

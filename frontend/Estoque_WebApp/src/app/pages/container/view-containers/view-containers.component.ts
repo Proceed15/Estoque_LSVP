@@ -41,11 +41,7 @@ export class ViewContainersComponent implements OnInit, OnDestroy {
   private loadContainers(): void {
     this.containerService.getAllContainers().subscribe({
       next: (data: Container[]) => {
-        this.containers = data;
-        this.containers?.forEach(container => {
-          delete container.id;
-        }
-        );
+        this.containers = data;       
       },
       error: (error) => {
         console.error('Erro ao buscar containers:', error);
@@ -63,6 +59,6 @@ export class ViewContainersComponent implements OnInit, OnDestroy {
   }
 
   EditContainer(id: number): void {
-    this.router.navigate(['manage/edit/container', id]);
+    this.router.navigate(['/manage/edit/container', id]);
   }
 }

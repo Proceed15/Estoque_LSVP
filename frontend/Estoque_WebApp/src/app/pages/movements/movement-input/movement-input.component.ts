@@ -64,10 +64,11 @@ export class MovementInputComponent {
     price: this.form.value.price,
     userId: this.form.value.userId
   };
+  
   this.movementService.createInputMovement(input).subscribe({
     next: (response) => {
       console.log('Movimento de entrada criado com sucesso:', response);
-      this.router.navigate(['/movments']);
+      this.router.navigate(['manage/view/movements']);
     },
     error: (error) => {
       console.error('Erro ao criar movimento de entrada:', error);

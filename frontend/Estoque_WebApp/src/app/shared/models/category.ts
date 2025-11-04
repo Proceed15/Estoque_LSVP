@@ -1,9 +1,13 @@
 export interface Category {
-    id: number;
+    id?: number;
     description: string;
-    created_at: Date;
+    created_at?: Date;
     updated_at?: Date;
-    food_type: number; // 0 for 'perecível', 1 for 'não perecível'
-    // !AVISO!
-    // TEM QUE SER 'food_type' E NÃO 'type' PARA NÃO DAR CONFLITO COM O TIPO 'type' DO ANGULAR.
+    food_type: number;
+    min_quantity: number;
+    max_quantity: number;
+}
+export enum FoodType {
+    PERECIVEL,
+    NAO_PERECIVEL
 }

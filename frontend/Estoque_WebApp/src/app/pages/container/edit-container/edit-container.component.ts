@@ -17,6 +17,13 @@ export class EditContainerComponent extends BaseCreateComponent {
   form: FormGroup;
   id: string = '';
 
+   typeOptions = [
+    { label: 'Estoque', value: 0 },
+    { label: 'Preparação', value: 1 },
+    { label: 'Descarte', value: 2 }
+  ];
+
+
   constructor(fb: FormBuilder,
     private containerService: ContainerService,
     router: Router,
@@ -25,14 +32,18 @@ export class EditContainerComponent extends BaseCreateComponent {
     super(router, fb);
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
     this.form = this.fb.group({
-      code: this.fb.control('', Validators.required)
+      code: this.fb.control('', Validators.required),
+      description: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
+      type: this.fb.control('', [Validators.required])
     });
 
     if (this.id !== '') {
       this.containerService.getContainerById(Number(this.id)).subscribe({
         next: container => {
           this.form.patchValue({
-            code: container.code
+            code: container.code,
+            description: container.description,
+            type: container.type
           });
         },
         error: () => {
@@ -46,15 +57,16 @@ export class EditContainerComponent extends BaseCreateComponent {
   onSubmit(): void {
     const idN = Number.parseInt(this.id);
 
-    const container: Partial<Container> = {
-      id: idN,
-      code: this.form.value.code
+    const container: Container = {
+      code: this.form.value.code,
+      description: this.form.value.description,
+      type: this.form.value.type
     };
     this.containerService.updateContainer(idN, container).subscribe({
       next: () => {
         this.form.reset();
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['manage/view/container']);
+          this.router.navigate(['manage/view/containers']);
         });
       },
       error: (error) => {

@@ -15,6 +15,8 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { FormTemplateComponent } from '../../../shared/components/form-template/form-template.component';
 import { Subject, takeUntil } from 'rxjs';
+import { UserService } from '../../../core/services/user.service';
+import { User } from '../../../shared/models/user';
 @Component({
   selector: 'app-scanner-input',
   imports: [IconModule, FormsModule, NavBarComponent, InputComponent, FormTemplateComponent, CommonModule],
@@ -45,7 +47,7 @@ export class ScannerInputComponent implements AfterViewInit, OnDestroy {
   
   ];
 
-  constructor(private auth: AuthenticationService, private fb: FormBuilder, private router: Router, private unitService: UnitService, private movementService: MovementService, private productService: ProductService) {
+  constructor(private userService: UserService, private auth: AuthenticationService, private fb: FormBuilder, private router: Router, private unitService: UnitService, private movementService: MovementService, private productService: ProductService) {
   this.form = this.fb.group({
       batch: this.fb.control('', Validators.required),
       price: this.fb.control('', Validators.required),
@@ -109,10 +111,19 @@ export class ScannerInputComponent implements AfterViewInit, OnDestroy {
       let unit: Unit;
       let batch = this.form.value.batch;
       let quantity = this.form.value.quantity;
+      let name = this.auth.getUserName();
+      let user: User;
+
+      this.userService.getUserByName(name).subscribe({next: (data) => {
+      
+        user = data;
+        }});
       this.unitService.getUnitByBatch(batch)
       .pipe(takeUntil(this.destroy$))
       .subscribe({next: (data) => {
         unit = data;
+        
+        
         if (this.product && data.gtin === this.product.gtin) {
           let inputMovement: InputMovement = {
             productId: this.product?.id ?? 0,
@@ -123,7 +134,7 @@ export class ScannerInputComponent implements AfterViewInit, OnDestroy {
             sourceDetails: 'Adicionado via Scanner',
             expiration_date: unit.expirationDate,
             price: this.form.value.price,
-            userId: this.auth.decodeToken().sub 
+            userId: user.id ?? 0,
 
           };
           this.movementService.createInputMovement(inputMovement)

@@ -6,6 +6,7 @@ import { CategoryService } from '../../../core/services/category.service';
 import { Category } from '../../../shared/models/category';
 import { Router } from '@angular/router';
 import { BaseCreateComponent } from '../../../shared/components/crud/base-create/base-create.component';
+import { max } from 'rxjs';
 
 @Component({
   selector: 'app-create-category',
@@ -19,27 +20,28 @@ export class CreateCategoryComponent extends BaseCreateComponent {
   form: FormGroup;
 
   typeOptions = [
-    { label: 'Perecível', value: 0 },
-    { label: 'Não-Perecível', value: 1 }
+    { label: 'Perecível', value: 'PERECIVEL' },
+    { label: 'Não-Perecível', value: 'NAO_PERECIVEL' }
   ];
 
   constructor(fb: FormBuilder, private categoryService: CategoryService, router: Router) {
     super(router, fb);
     this.form = fb.group({
       description: this.fb.control('', Validators.required),
-      type: this.fb.control(null, Validators.required)
+      type: this.fb.control(null, Validators.required),
+      max_quantity: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(1000000)]),
+      min_quantity: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(1000000)])
     });
   }
   
   onSubmit(): void {
-    const category: Category = {
-      id: 0,
+    const categoryPayload = {
       description: this.form.value.description,
-      created_at: new Date(),
-      updated_at: new Date(),
-      food_type: this.form.value.type
+      foodType: this.form.value.type,
+      min_quantity: this.form.value.min_quantity,
+      max_quantity: this.form.value.max_quantity
       };
-      this.categoryService.registerCategory(category).subscribe({
+      this.categoryService.registerCategory(categoryPayload).subscribe({
         next: () => {
           this.form.reset();
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

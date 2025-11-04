@@ -28,21 +28,18 @@ export class UserService {
     return this.http.get<User>(this.userLink+"/"+userId);
   }
 
+  public getUserByName(userName: string): Observable<User> {
+    return this.http.get<User>(this.userLink+"/n/"+userName);
+  }
+
   //Método para atualizar um usuário
-  public updateUser(userId: number, user: Partial<User>): Observable<User> {
+  public updateUser(userId: number, user: User): Observable<User> {
      return this.http.put<User>(this.userLink + "/" + userId, user);
   }
     //Método para deletar um usuário
-  public deleteUser(userId: number): void {	
-    this.http.delete<User>(this.userLink+"/"+userId).subscribe(
-      (response) => {
-        console.log('Usuário deletado com sucesso:', response);
-      },
-      (error) => {
-        console.error('Erro ao deletar usuário:', error);
-      } 
-    );
-  
+  public deleteUser(userId: number): Observable<User> {	
+    return this.http.delete<User>(this.userLink+"/"+userId);
+      
   }
 
 

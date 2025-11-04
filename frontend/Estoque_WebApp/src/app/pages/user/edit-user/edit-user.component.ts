@@ -52,7 +52,7 @@ export class EditUserComponent extends BaseCreateComponent {
   onSubmit(): void {
     const idN = Number.parseInt(this.id);
 
-    const user: Partial<User> = {
+    const user: User = {
     id: idN,
     name: this.form.value.name,
     role: this.form.value.role
