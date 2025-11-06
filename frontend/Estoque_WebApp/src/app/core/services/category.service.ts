@@ -3,6 +3,7 @@ import { Category } from '../../shared/models/category';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { Page } from '../../shared/models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,16 @@ export class CategoryService {
   }
 
   // Método para pegar todas as categorias
-  public getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoryLink);
+  public getAllCategories(page: number = 1, limit: number = 20, sort: string = 'id,desc', description?: string): Observable<Page<Category>> {
+    const pageNumber = page + 1; // O backend espera a página começando em 1
+    let params = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('limit', limit.toString())
+      .set('sort', sort.toString());
+    if (description && description.trim() !== '') {
+      params = params.set('description', description.toString());
+    }
+    return this.http.get<Page<Category>>(this.categoryLink, { params });
   }
 
   // Método para pegar uma categoria pelo id

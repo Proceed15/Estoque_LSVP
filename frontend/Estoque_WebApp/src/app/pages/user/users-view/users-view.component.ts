@@ -10,6 +10,7 @@ import { NavigationWatcherService } from '../../../core/services/navigation-watc
 import { ModalModule } from '../../../shared/modules/modal/modal.module';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { ViewTemplateComponent } from '../../../shared/components/view-template/view-template.component';
+import { Page } from '../../../shared/models/page';
 
 @Component({
   selector: 'app-users-view',
@@ -22,6 +23,10 @@ export class UsersViewComponent implements OnInit, OnDestroy, AfterViewInit {
   users: User[] = []; // Array para armazenar os usuários
   private navigationSub?: Subscription;
   isDeleted: boolean = false; // Variável para controlar a exibição do modal de exclusão
+  pagedView: boolean = false;
+  pageNumber: number = 0;
+  totalPages: number = 0;
+  private searchTerm: string = '';
   @ViewChild('exceptionUser') exceptionUser!: ModalComponent;
 
 
@@ -34,12 +39,12 @@ export class UsersViewComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   ngOnInit(): void {
      // Atualiza ao iniciar
-    this.loadUsers();
+    this.loadUsers(this.pageNumber);
 
      this.navigationSub = this.navigationWatcher.navigation$.subscribe(() => {
       // 3. Verifique se está na rota deste componente
       if (this.router.url.startsWith('/users')) { // ajuste conforme sua rota
-        this.loadUsers();
+        this.loadUsers(this.pageNumber);
       }
     });
 
@@ -65,13 +70,13 @@ export class UsersViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   //Método que carrega usuário
-  private loadUsers(): void {
-    this.userService.getAllUsers().subscribe({
-      next: (data: User[]) => {
-        this.users = data;
-        // A linha 'delete user.id;' foi removida, pois estava incorretamente deletando a propriedade ID dos objetos de usuário.
-        // Isso causava problemas na identificação de usuários para exclusão e outras operações.
-        // O loop `forEach` também estava sintaticamente incorreto e não é mais necessário após remover `delete user.id;`.
+  private loadUsers(page: number = 0, name?: string): void {
+    this.userService.getAllUsers(page, 20, 'id,desc', name).subscribe({
+      next: (data: Page<User>) => {
+        data.totalPages > 1 ? this.pagedView = true : this.pagedView = false;
+        this.users = data.content;
+        this.pageNumber = data.number;
+        this.totalPages = data.totalPages;
       },
       error: (error) => {
         console.error('Erro ao buscar usuários:', error);
@@ -126,5 +131,15 @@ export class UsersViewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['manage/edit/user', id]);
 
 
+  }
+
+  onPageChange(page: number): void {
+    this.pageNumber = page;
+    this.loadUsers(page);
+  }
+
+  onSearch(term: string): void {
+    this.searchTerm = term;
+    this.loadUsers(0, this.searchTerm);
   }
 }

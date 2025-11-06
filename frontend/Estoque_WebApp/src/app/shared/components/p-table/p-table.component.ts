@@ -5,6 +5,7 @@ import { ModalModule } from '../../modules/modal/modal.module';
 import { ModalComponent } from '../modal/modal.component';
 import { EmptyComponentComponent } from '../empty-component/empty-component.component';
 import { TranslationPipe } from './../../../core/pipes/translation.pipe';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-p-table',
@@ -28,6 +29,7 @@ export class PTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   @Output() onDelete = new EventEmitter<T>();
   @Output() onView = new EventEmitter<T>();
   @Output() onSelect = new EventEmitter<T | undefined>(); // <-- MUDANÇA: Novo EventEmitter para a seleção
+  @Output() searchEvent = new EventEmitter<string>();
 
   rowSelected?: T;
   sortDirection: { [key: string]: 'asc' | 'desc' } = {};
@@ -35,6 +37,7 @@ export class PTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   initialData: any[] = [];
   attemptedDeleteId?: any;
   @ViewChild('excluido') wasDeleteModal!: ModalComponent;
+  private searchSubject = new Subject<string>();
 
   constructor(private icon: IconModule) {}
 
@@ -43,6 +46,13 @@ export class PTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   ngOnInit(): void {
     this.initialData = [...this.data];
     this.updateColumns();
+
+    this.searchSubject.pipe(
+      debounceTime(300), // espera 300ms após a última emissão
+      distinctUntilChanged() // só emite se o valor mudou
+    ).subscribe(searchTerm => {
+      this.searchEvent.emit(searchTerm);
+    });
   }
 
   toggleSelected(row: T): void {
@@ -81,18 +91,9 @@ export class PTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  onSearch(event: Event): void {
+  onSearchInputChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const searchTerm = input.value.toLowerCase();
-    if (searchTerm === '') {
-      this.data = [...this.initialData];
-      return;
-    }
-    this.data = this.initialData.filter(item =>
-      Object.values(item).some(value =>
-        value?.toString().toLowerCase().includes(searchTerm)
-      )
-    );
+    this.searchSubject.next(input.value);
   }
 
   deleteItem(row: T): void {

@@ -11,16 +11,22 @@ import { exactLengthValidator, onlyNumbersValidator } from '../../../core/valida
 import { CategoryService } from '../../../core/services/category.service';
 import { Category } from '../../../shared/models/category';
 import { BaseCreateComponent } from '../../../shared/components/crud/base-create/base-create.component';
+import { IconModule, icons } from '../../../shared/modules/icon/icon.module';
 
 @Component({
   selector: 'app-create-products',
-  imports: [FormTemplateComponent, ReactiveFormsModule, InputComponent, JsonPipe, PTableComponent],
+  imports: [FormTemplateComponent, ReactiveFormsModule, InputComponent, JsonPipe, PTableComponent, IconModule],
   templateUrl: './create-products.component.html',
   styleUrl: './create-products.component.css'
 })
 export class CreateProductsComponent extends BaseCreateComponent implements OnInit {
   form: FormGroup;
+  icons = icons;
 
+  isCategoryPaged: boolean = false;
+  categoryPageNumber: number = 0;
+  categoryTotalPages: number = 0;
+  categorySearchTerm: string = '';
   categories: any[] = [];
 
   measureOption = [
@@ -46,13 +52,17 @@ export class CreateProductsComponent extends BaseCreateComponent implements OnIn
   }
 
   ngOnInit(): void {
-    this.categoryService.getAllCategories().subscribe({
+    this.loadCategories();
+  }
+
+  private loadCategories(page: number = 0, description?: string): void {
+    this.categoryService.getAllCategories(page, 8, 'id,desc', description).subscribe({
       next: (categories) => {
-        // <-- MUDANÇA: Mapeado para incluir o 'id', essencial para o formulário.
-        this.categories = categories.map((cat: Category) => ({
+
+        this.categories = categories.content.map((cat: Category) => ({
           id: cat.id,
           Descrição: cat.description,
-          Tipo: cat.food_type
+          Tipo: cat.foodType
         }));
       },
       error: (error) => {
@@ -67,6 +77,16 @@ export class CreateProductsComponent extends BaseCreateComponent implements OnIn
     } else {
       this.form.get('categoryId')?.setValue(null); 
     }
+  }
+
+  onCategorySearch(term: string): void {
+    this.categorySearchTerm = term;
+    this.loadCategories(0, this.categorySearchTerm);
+  }
+
+  onCategoryPageChange(page: number): void {
+    if (page >= 0 && page < this.categoryTotalPages)
+      this.loadCategories(page, this.categorySearchTerm);
   }
 
   onSubmit(): void {

@@ -46,7 +46,17 @@
     [title]="'Selecione uma Categoria'"
     [select]="true"
     [showSearch]="true"
-    (onSelect)="handleCategorySelection($event)" >
+    (onSelect)="handleCategorySelection($event)"
+    (searchEvent)="onCategorySearch($event)" >
   </app-p-table>
+  <div *ngIf="isCategoryPaged">
+    <ul class="pagination">
+     <li class="list-item" id="first" (click)="onCategoryPageChange(0)"><fa-icon [icon] = "icons.faBackwardFast"></fa-icon></li>
+     <li class="listitem" id="previous" (click)="onCategoryPageChange(categoryPageNumber - 1)"><fa-icon [icon] = "icons.faBackward"></fa-icon></li>
+     <li class="list-item" id="page-number">{{categoryPageNumber + 1}}</li>
+     <li class="list-item" id="next" (click)="onCategoryPageChange(categoryPageNumber + 1)"><fa-icon [icon] = "icons.faForward"></fa-icon></li>
+     <li class="list-item" id="last" (click)="onCategoryPageChange(categoryTotalPages - 1)"><fa-icon [icon] = "icons.faForwardFast"></fa-icon></li>
+    </ul>
+  </div>
 
 </app-form-template>

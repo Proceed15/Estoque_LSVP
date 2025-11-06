@@ -18,6 +18,10 @@ import { ViewTemplateComponent } from '../../../shared/components/view-template/
 export class ViewCategoriesComponent implements OnInit, OnDestroy {
   categories: Category[] = []; // Mesmo esquema de usuários, Array para armazenar as categorias.
   private navigationSub?: Subscription;
+  pagedView: boolean = false;
+  pageNumber: number = 0;
+  totalPages: number = 0;
+  private searchTerm: string = '';
 
   constructor(
     private categoryService: CategoryService,
@@ -27,11 +31,11 @@ export class ViewCategoriesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loadCategories();
+    this.loadCategories(this.pageNumber);
 
     this.navigationSub = this.navigationWatcher.navigation$.subscribe(() => {
       if (this.router.url.startsWith('/manage/view/categories')) {
-        this.loadCategories();
+        this.loadCategories(this.pageNumber);
       }
     });
   }
@@ -44,10 +48,13 @@ export class ViewCategoriesComponent implements OnInit, OnDestroy {
     return this.auth.getToken();
   }
 
-  private loadCategories(): void {
-    this.categoryService.getAllCategories().subscribe({
+  private loadCategories(page: number = 0, description?: string): void {
+    this.categoryService.getAllCategories(page, 20, 'id,desc', description).subscribe({
       next: (categories) => {
-        this.categories = categories.map((cat: Category) => ({
+        categories.totalPages > 1 ? this.pagedView = true : this.pagedView = false;
+        this.totalPages = categories.totalPages;
+        this.pageNumber = categories.number;
+        this.categories = categories.content.map((cat: Category) => ({
           ...cat,
           created_at: cat.created_at ? new Date(cat.created_at) : undefined,
           updated_at: cat.updated_at ? new Date(cat.updated_at) : undefined
@@ -72,5 +79,15 @@ export class ViewCategoriesComponent implements OnInit, OnDestroy {
 
   EditCategory(id: number): void {
     this.router.navigate(['/manage/edit/category', id]);
+  }
+
+  onPageChange(page: number): void {
+    this.pageNumber = page;
+    this.loadCategories(page);
+  }
+
+  onSearch(term: string): void {
+    this.searchTerm = term;
+    this.loadCategories(0, this.searchTerm);
   }
 }

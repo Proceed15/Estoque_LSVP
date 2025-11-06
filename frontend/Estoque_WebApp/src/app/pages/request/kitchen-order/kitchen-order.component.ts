@@ -24,7 +24,7 @@ export class KitchenOrderComponent implements OnInit {
   icons = icons;
   form: FormGroup;
 
-  products: Product[] = [];
+  products: any[] = [];
 
   orderItems: OrderItem[] = [];
 
@@ -46,7 +46,7 @@ export class KitchenOrderComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        this.products = products.map(product => {
+        this.products = products.content.map(product => {
           
           return { id: product.id, description: product.description, gtin: product.gtin } as Product;
         });

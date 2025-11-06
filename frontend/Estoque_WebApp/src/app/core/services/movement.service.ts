@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Input } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { InputMovement } from '../../shared/models/inputMovement';
 import { Movement } from '../../shared/models/movement';
+import { Page } from '../../shared/models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,13 @@ export class MovementService {
 
  
   // Método para pegar todos Movements
-  public getAllMovements(): Observable<Movement[]> {
-    return this.http.get<Movement[]>(this.movementLink);
+  public getAllMovements(page: number = 1, limit: number = 20, sort: string = 'date,desc'): Observable<Page<Movement>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString())
+      .set('sort', sort);
+
+    return this.http.get<Page<Movement>>(this.movementLink, { params });
   }
   
   // Método para pegar um Movement pelo id
@@ -35,15 +41,8 @@ export class MovementService {
   }
 
   // Método para deletar um Movement
-  public deleteMovement(movementId: number): void {
-    this.http.delete<Movement>(`${this.movementLink}/${movementId}`).subscribe(
-        (response) => {
-          console.log('Movimentação deletado com sucesso:', response);
-        },
-        (error) => {
-          console.error('Erro ao deletar Movimentação:', error);
-        }
-      );
+  public deleteMovement(movementId: number): Observable<void> {
+    return this.http.delete<void>(`${this.movementLink}/${movementId}`);
   }
   
 }

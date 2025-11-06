@@ -1,10 +1,12 @@
 <app-view-template 
     createText="Novo Produto" 
-    (createNewEvent)=" router.navigate(['manage/create/product']) ">
+    (createNewEvent)=" router.navigate(['manage/create/product']) "
+    [isPagedView]="pagedView" [pageNumber]="pageNumber" [totalPages]="totalPages" (pageChangeEvent)="onPageChange($event)">
     <app-p-table 
-        [showSearch]="true" 
+        [showSearch]="false" 
         (onDelete)="DeleteProduct($event.id)" 
-        (onEdit)="EditProduct($event.id)" 
+        (onEdit)="EditProduct($event.id)"
+        (searchEvent)="onSearch($event)" 
         [data]="products" 
         [delete]="true" 
         [edit]="true" 

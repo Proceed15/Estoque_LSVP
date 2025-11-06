@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Container } from '../../shared/models/container';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { Page } from '../../shared/models/page';
 
 
 @Injectable({
@@ -22,8 +23,20 @@ export class ContainerService {
   }
 
   // Método para pegar todos containers
-  public getAllContainers(): Observable<Container[]> {
-    return this.http.get<Container[]>(this.containerLink);
+  public getAllContainers(page: number = 1, limit: number = 20, sort: string = 'id,desc', code?: string, category?: string): Observable<Page<Container>> {
+    const pageNumber = page + 1; // O backend espera a página começando em 1
+    let params = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('limit', limit.toString())
+      .set('sort', sort.toString());
+    if (code && code.trim() !== '') {
+      params = params.set('code', code.toString());
+    }
+    if (category && category.trim() !== '') {
+      params = params.set('category', category.toString());
+    }
+    
+    return this.http.get<Page<Container>>(this.containerLink, { params });
   }
 
   // Método para pegar um container pelo id

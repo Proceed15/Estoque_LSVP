@@ -3,7 +3,7 @@ export interface Category {
     description: string;
     created_at?: Date;
     updated_at?: Date;
-    food_type: number;
+    foodType: number;
     min_quantity: number;
     max_quantity: number;
 }

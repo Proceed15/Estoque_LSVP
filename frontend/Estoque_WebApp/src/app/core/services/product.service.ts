@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../../shared/models/product';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ProductCreate } from '../../shared/models/product-create';
+import { Category } from './../../shared/models/category';
+import { Page } from '../../shared/models/page';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,8 +22,21 @@ export class ProductService {
 }
 
     //Método para pegar todos Produtos
-  public getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productLink);
+  public getAllProducts(page: number = 1, limit: number = 20, sort: string = 'id,desc', gtin?: String, category?: String): Observable<Page<Product>> {
+    const pageNumber = page + 1; // O backend espera a página começando em 1
+    let params = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('limit', limit.toString())
+      .set('sort', sort.toString());
+    if (gtin && gtin.trim() !== '') {
+      params = params.set('gtin', gtin.toString());
+    }
+    if (category && category.trim() !== '') {
+      params = params.set('category', category.toString());
+    }
+    
+    
+    return this.http.get<Page<Product>>(this.productLink, { params });
   }
 
   //Método para pegar um Produto pelo id
@@ -39,16 +54,8 @@ export class ProductService {
      return this.http.put<Product>(this.productLink + "/" + productId, product);
   }
     //Método para deletar um Produto
-  public deleteProduct(productId: string): void {	
-    this.http.delete<Product>(this.productLink+"/"+productId).subscribe(
-      (response) => {
-        console.log('Produto deletado com sucesso:', response);
-      },
-      (error) => {
-        console.error('Erro ao deletar Produto:', error);
-      } 
-    );
-  
+  public deleteProduct(productId: string): Observable<void> {	
+    return this.http.delete<void>(`${this.productLink}/${productId}`);
   }
 
 

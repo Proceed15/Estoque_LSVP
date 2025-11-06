@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../shared/models/user';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Page } from '../../shared/models/page';
+import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,8 +20,17 @@ export class UserService {
 }
 
     //Método para pegar todos usuários
-  public getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.userLink);
+  public getAllUsers(page: number = 1, limit: number = 20, sort: string = 'id,desc', name?: string): Observable<Page<User>> {
+    const pageNumber = page + 1; // O backend espera a página começando em 1
+    let params = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('limit', limit.toString());
+
+    if (name && name.trim() !== '') {
+      params = params.set('name', name);
+    }
+
+    return this.http.get<Page<User>>(this.userLink, { params });
   }
 
   //Método para pegar um usuário pelo id

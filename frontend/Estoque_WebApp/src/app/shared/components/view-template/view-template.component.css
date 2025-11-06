@@ -80,3 +80,30 @@
 }
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 1rem;
+
+}
+.pagination .list-item {
+    margin: 0 0.8rem;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #919191;
+    transition: color 0.2s ease-in-out;
+
+}
+
+.pagination .list-item:hover {
+    color: #333;
+}
+
+.pagination .list-item#page-number {
+    cursor: default;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000000;
+}

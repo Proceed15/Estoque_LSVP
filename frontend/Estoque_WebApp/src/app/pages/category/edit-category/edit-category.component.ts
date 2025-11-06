@@ -36,7 +36,7 @@ export class EditCategoryComponent extends BaseCreateComponent {
         next: category => {
           this.form.patchValue({
             description: category.description,
-            type: category.food_type === 0 ? 'PERECIVEL' : 'NAO_PERECIVEL',
+            type: category.foodType,
             min_quantity: category.min_quantity,
             max_quantity: category.max_quantity
           });

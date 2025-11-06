@@ -32,7 +32,13 @@ import {
   faB,
   faTriangleCircleSquare,
   faUserCircle,
-  faXmark
+  faXmark,
+  faBackward,
+  faForward,
+  faBackwardFast,
+  faForwardFast,
+  faF
+
 
   
 } from '@fortawesome/free-solid-svg-icons';
@@ -73,7 +79,11 @@ export const icons = {
   faUtensils,
   faB,
   faUserCircle,
-  faXmark
+  faXmark,
+  faBackward,
+  faForward,
+  faBackwardFast,
+  faForwardFast
 
 };
 

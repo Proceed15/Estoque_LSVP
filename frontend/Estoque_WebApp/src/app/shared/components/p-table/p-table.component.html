@@ -4,7 +4,7 @@
   type="text"
   class="search"
   placeholder="Pesquisar..."
-  (input)="onSearch($event)"
+  (input)="onSearchInputChange($event)"
 />
   <app-empty-component *ngIf="data.length === 0"></app-empty-component>
 

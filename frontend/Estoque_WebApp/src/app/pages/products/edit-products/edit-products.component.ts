@@ -11,16 +11,22 @@ import { PTableComponent } from '../../../shared/components/p-table/p-table.comp
 import { Category } from '../../../shared/models/category';
 import { forkJoin } from 'rxjs';
 import { onlyNumbersValidator } from '../../../core/validators/custom-validators';
+import { IconModule, icons } from '../../../shared/modules/icon/icon.module';
 
 @Component({
   selector: 'app-edit-product',
-  imports: [FormTemplateComponent, ReactiveFormsModule, InputComponent, PTableComponent],
+  imports: [FormTemplateComponent, ReactiveFormsModule, InputComponent, PTableComponent, IconModule],
   templateUrl: './edit-products.component.html',
   styleUrl: './edit-products.component.css'
 })
 export class EditProductsComponent extends BaseCreateComponent implements OnInit {
   form: FormGroup;
   id: string = '';
+  icons = icons;
+  isCategoryPaged: boolean = false;
+  categoryPageNumber: number = 0;
+  categoryTotalPages: number = 0;
+  categorySearchTerm: string = '';
   categories: any[] = [];
   @ViewChild('categoryTable') categoryTable!: PTableComponent<any>;
 
@@ -52,16 +58,19 @@ export class EditProductsComponent extends BaseCreateComponent implements OnInit
   ngOnInit(): void {
     if (this.id !== '') {
       const product$ = this.productService.getProductById(Number(this.id));
-      const categories$ = this.categoryService.getAllCategories();
+      const categories$ = this.categoryService.getAllCategories(0, 8, 'id,desc');
 
       forkJoin([product$, categories$]).subscribe({
         next: ([product, categories]) => {
-          // Mapeia as categorias para o formato da tabela
-          this.categories = categories.map((cat: Category) => ({
+          this.categories = categories.content.map((cat: Category) => ({
             id: cat.id,
             Descrição: cat.description,
-            Tipo: cat.food_type === 0 ? 'Perecível' : 'Não-Perecível'
+            Tipo: cat.foodType
           }));
+
+          this.isCategoryPaged = categories.totalPages > 1;
+          this.categoryPageNumber = categories.number;
+          this.categoryTotalPages = categories.totalPages;
 
           // Encontra a categoria e a seleciona na tabela após a view ser inicializada
           const categoryToSelect = this.categories.find(c => c.id === product.category_id);
@@ -95,6 +104,31 @@ export class EditProductsComponent extends BaseCreateComponent implements OnInit
     }
   }
 
+  private loadCategories(page: number = 0, description?: string): void {
+    this.categoryService.getAllCategories(page, 8, 'id,desc', description).subscribe({
+      next: (categories) => {
+        this.isCategoryPaged = categories.totalPages > 1;
+        this.categoryPageNumber = categories.number;
+        this.categoryTotalPages = categories.totalPages;
+        this.categories = categories.content.map((cat: Category) => ({
+          id: cat.id,
+          Descrição: cat.description,
+          Tipo: cat.foodType
+        }));
+      },
+      error: (error) => console.error('Erro ao carregar categorias:', error)
+    });
+  }
+
+  onCategorySearch(term: string): void {
+    this.categorySearchTerm = term;
+    this.loadCategories(0, this.categorySearchTerm);
+  }
+
+  onCategoryPageChange(page: number): void {
+    if (page >= 0 && page < this.categoryTotalPages)
+      this.loadCategories(page, this.categorySearchTerm);
+  }
 
   onSubmit(): void {
     const idN = Number.parseInt(this.id);
